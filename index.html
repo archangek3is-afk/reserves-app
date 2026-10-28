@@ -16,15 +16,6 @@
 </head>
 <body>
 
-  <!-- Update Banner (bottom, above tab bar) -->
-  <div class="update-banner" id="update-banner" aria-live="polite">
-    <span>Nouvelle version disponible</span>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <button class="btn btn--sm" id="btn-update" style="background:#fff;color:var(--accent);font-weight:700;">Mettre à jour</button>
-      <button class="btn-icon" id="btn-update-close" aria-label="Fermer" style="color:#fff;font-size:1.1rem;line-height:1;">✕</button>
-    </div>
-  </div>
-
   <!-- Header -->
   <header class="app-header">
     <div style="display:flex;align-items:center;gap:10px;">
@@ -36,6 +27,15 @@
       <button class="btn-icon" id="btn-settings" aria-label="Réglages">⚙️</button>
     </div>
   </header>
+
+  <!-- Update Banner (in-flow, below header — pushes content down, jamais par-dessus) -->
+  <div class="update-banner" id="update-banner" aria-live="polite">
+    <span>Nouvelle version disponible</span>
+    <div class="update-banner__actions">
+      <button class="update-banner__btn" id="btn-update">Mettre à jour</button>
+      <button class="btn-icon update-banner__close" id="btn-update-close" aria-label="Fermer">✕</button>
+    </div>
+  </div>
 
   <!-- Foyer Setup Overlay (hidden by default) -->
   <div id="foyer-container" class="hidden"></div>

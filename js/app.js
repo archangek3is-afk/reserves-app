@@ -133,6 +133,12 @@ export function showSettings() {
 // ---- Init ----
 async function init() {
   initTheme();
+
+  // Lier les boutons du bandeau en premier — avant waitForAuth()
+  // pour éviter la race condition si le SW se met à jour pendant l'auth
+  document.getElementById('btn-update')?.addEventListener('click', applyUpdate);
+  document.getElementById('btn-update-close')?.addEventListener('click', hideUpdateBanner);
+
   initServiceWorker();
 
   // Show loading
@@ -192,16 +198,6 @@ async function init() {
   const backBtn = document.getElementById('btn-back-from-settings');
   if (backBtn) {
     backBtn.addEventListener('click', () => navigateTo('accueil'));
-  }
-
-  // Update banner
-  const updateBtn = document.getElementById('btn-update');
-  if (updateBtn) {
-    updateBtn.addEventListener('click', applyUpdate);
-  }
-  const updateCloseBtn = document.getElementById('btn-update-close');
-  if (updateCloseBtn) {
-    updateCloseBtn.addEventListener('click', hideUpdateBanner);
   }
 
   // Navigate to default screen

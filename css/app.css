@@ -848,26 +848,53 @@ dialog .dialog-actions {
 
 /* --- Update Banner --- */
 .update-banner {
-  position: fixed;
-  bottom: calc(var(--safe-bottom) + var(--tab-h));
-  left: 0;
-  right: 0;
-  z-index: 150;
-  background: var(--accent);
-  color: #FFFFFF;
-  padding: 10px 16px;
-  display: flex;
+  /* In-flow : jamais fixed/absolute, pousse le contenu vers le bas */
+  display: none;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
+  background: var(--accent);
+  color: #FFFFFF;
+  padding: 0 16px;
+  min-height: 48px;
   font-size: 0.85rem;
   font-weight: 600;
-  box-shadow: 0 -2px 8px var(--shadow);
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px var(--shadow);
 }
 
 .update-banner--visible {
-  transform: translateY(0);
+  display: flex;
+}
+
+.update-banner__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.update-banner__btn {
+  background: #fff;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  padding: 0 14px;
+  min-height: 44px;
+  min-width: 44px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.update-banner__btn:active {
+  opacity: 0.85;
+}
+
+.update-banner__close {
+  /* Hérité de .btn-icon : 44×44 px, flex centré */
+  color: #fff;
 }
 
 /* --- Loading Spinner --- */
