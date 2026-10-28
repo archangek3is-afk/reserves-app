@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Scanner ZBar WASM — Test</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --bg: #0f172a; --surface: #1e293b; --border: #334155;
+      --text: #f1f5f9; --dim: #94a3b8; --accent: #7c3aed;
+      --mono: 'Courier New', monospace;
+    }
+    html, body { height:100%; background:var(--bg); color:var(--text);
+      font-family:system-ui,-apple-system,sans-serif; -webkit-text-size-adjust:100%; }
+    body { display:flex; flex-direction:column;
+      padding-top:var(--safe-top); padding-bottom:var(--safe-bottom); overflow-x:hidden; }
+
+    .hdr { padding:10px 16px 6px; background:var(--surface);
+      border-bottom:1px solid var(--border); flex-shrink:0; }
+    .hdr h1 { font-size:.95rem; font-weight:700; }
+    .hdr p  { font-size:.68rem; color:var(--dim); margin-top:2px; }
+
+    /* Viewfinder */
+    #vf-wrap { position:relative; width:100%; background:#000; flex-shrink:0; }
+    #video { width:100%; display:block; max-height:50vh; object-fit:cover; }
+    /* Rectangle de visée dessiné par CSS */
+    #vf-wrap::after {
+      content:'';
+      position:absolute;
+      top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      width:85%; height:28%;
+      border:2px solid rgba(124,58,237,.9);
+      border-radius:4px;
+      box-shadow:0 0 0 2000px rgba(0,0,0,.35);
+      pointer-events:none;
+    }
+    #canvas { display:none; }
+
+    /* Torch */
+    #btn-torch { position:absolute; top:10px; right:10px; z-index:10;
+      width:44px; height:44px; border:none; border-radius:22px;
+      background:rgba(0,0,0,.55); color:#fff; font-size:1.3rem;
+      cursor:pointer; display:none; align-items:center; justify-content:center;
+      -webkit-tap-highlight-color:transparent; }
+    #btn-torch.visible { display:flex; }
+    #btn-torch.on { background:rgba(255,220,0,.75); color:#000; }
+
+    /* Bouton scan suivant */
+    #btn-next-wrap { flex-shrink:0; padding:10px 16px; background:var(--bg); display:none; }
+    #btn-next-wrap.visible { display:block; }
+    #btn-next { width:100%; height:52px; background:var(--accent); color:#fff;
+      border:none; border-radius:12px; font-size:1rem; font-weight:700;
+      cursor:pointer; -webkit-tap-highlight-color:transparent; }
+    #btn-next:active { opacity:.85; }
+
+    /* Status + debug */
+    #status { flex-shrink:0; padding:5px 16px; font-size:.75rem; color:#fbbf24; min-height:26px; }
+    #debug  { flex-shrink:0; padding:3px 16px; font-size:.68rem; color:var(--dim);
+      font-family:var(--mono); white-space:pre-wrap; word-break:break-all; }
+    #errors { flex-shrink:0; padding:3px 16px; font-size:.68rem; color:#f87171;
+      font-family:var(--mono); white-space:pre-wrap; word-break:break-all; min-height:0; }
+
+    /* Dernier scan */
+    #last-result { flex-shrink:0; padding:10px 16px;
+      background:var(--surface); border-bottom:1px solid var(--border); min-height:58px; }
+    #last-result .lbl { font-size:.6rem; color:var(--dim);
+      text-transform:uppercase; letter-spacing:.08em; margin-bottom:2px; }
+    #last-result .ean { font-family:var(--mono); font-size:1.3rem; font-weight:700;
+      color:#4ade80; letter-spacing:.04em; }
+    #last-result.waiting .ean { color:var(--dim); font-size:.85rem;
+      font-family:inherit; font-weight:400; }
+    #last-result .meta { font-size:.7rem; color:var(--dim); margin-top:2px; }
+
+    /* Historique */
+    #hist-section { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+    .hist-hdr { padding:8px 16px 4px; font-size:.6rem; color:var(--dim);
+      text-transform:uppercase; letter-spacing:.08em;
+      position:sticky; top:0; background:var(--bg); z-index:1; }
+    #hist-list { list-style:none; padding:0 16px 8px; }
+    #hist-list li { display:flex; align-items:baseline; gap:8px;
+      padding:6px 0; border-bottom:1px solid var(--border); }
+    #hist-list li:last-child { border-bottom:none; }
+    .hi { font-size:.66rem; color:var(--dim); width:16px; flex-shrink:0; text-align:right; }
+    .he { font-family:var(--mono); font-size:.9rem; font-weight:700; flex:1; }
+    .hf { font-size:.64rem; color:var(--dim); flex-shrink:0; }
+    .hm { font-size:.73rem; color:#facc15; flex-shrink:0; min-width:50px; text-align:right; }
+
+    /* Saisie manuelle */
+    #manual { flex-shrink:0; padding:8px 16px;
+      background:var(--surface); border-top:1px solid var(--border);
+      display:flex; gap:8px; }
+    #m-input { flex:1; background:var(--bg); border:1px solid var(--border);
+      border-radius:8px; color:var(--text); font-size:1rem;
+      padding:0 10px; height:44px; font-family:var(--mono); -webkit-appearance:none; }
+    #m-ok { height:44px; padding:0 14px; background:var(--accent); color:#fff;
+      border:none; border-radius:8px; font-size:.85rem; font-weight:600;
+      cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  </style>
+</head>
+<body>
+
+  <div class="hdr">
+    <h1>ZBar WASM (BarcodeDetectorPolyfill) — Test</h1>
+    <p>ean_13 · ean_8 · upc_a &nbsp;|&nbsp; @undecaf/barcode-detector-polyfill 0.9.23 (MIT)</p>
+  </div>
+
+  <div id="vf-wrap">
+    <video id="video" autoplay playsinline muted></video>
+    <canvas id="canvas"></canvas>
+    <button id="btn-torch" aria-label="Lampe torche">🔦</button>
+  </div>
+
+  <div id="status">Chargement du moteur WASM…</div>
+  <div id="debug">résolution : —</div>
+  <div id="errors"></div>
+
+  <div id="btn-next-wrap">
+    <button id="btn-next">▶ Démarrer le premier scan</button>
+  </div>
+
+  <div id="last-result" class="waiting">
+    <div class="lbl">Dernier scan</div>
+    <div class="ean">En attente…</div>
+    <div class="meta"></div>
+  </div>
+
+  <div id="hist-section">
+    <div class="hist-hdr">Historique (10 derniers)</div>
+    <ul id="hist-list">
+      <li style="color:var(--dim);font-size:.78rem;padding:8px 0;border:none;">Aucun scan pour le moment.</li>
+    </ul>
+  </div>
+
+  <div id="manual">
+    <input id="m-input" type="text" inputmode="numeric" pattern="[0-9]*"
+           placeholder="Code manuel" maxlength="14" enterkeyhint="done">
+    <button id="m-ok">OK</button>
+  </div>
+
+  <!-- 1. ZBar WASM runtime (expose `zbarWasm` global) -->
+  <script src="./vendor/zbar-wasm.js"></script>
+  <!-- 2. BarcodeDetector polyfill (utilise `zbarWasm`, expose `barcodeDetectorPolyfill`) -->
+  <script src="./vendor/barcode-detector-polyfill.js"></script>
+
+  <script>
+    'use strict';
+
+    // ── Erreurs JS visibles ────────────────────────────────────────────────────
+    const errorsEl = document.getElementById('errors');
+    window.addEventListener('error', e => {
+      errorsEl.textContent += '[JS] ' + e.message + ' (' + (e.filename||'').split('/').pop() + ':' + e.lineno + ')\n';
+    });
+    window.addEventListener('unhandledrejection', e => {
+      errorsEl.textContent += '[Promise] ' + (e.reason?.message || String(e.reason)) + '\n';
+    });
+
+    const statusEl = document.getElementById('status');
+    const debugEl  = document.getElementById('debug');
+    const lastEl   = document.getElementById('last-result');
+    const histList = document.getElementById('hist-list');
+    const btnTorch = document.getElementById('btn-torch');
+    const btnNextW = document.getElementById('btn-next-wrap');
+    const btnNext  = document.getElementById('btn-next');
+    const video    = document.getElementById('video');
+    const canvas   = document.getElementById('canvas');
+    const mInput   = document.getElementById('m-input');
+    const mOk      = document.getElementById('m-ok');
+
+    let scans        = [];
+    let timerStart   = null;
+    let scanning     = false;    // true = frame loop active
+    let rafId        = null;
+    let lastCode     = null;
+    let lastCodeTime = 0;
+    const DEBOUNCE   = 2000;
+    let torchOn      = false;
+    let videoTrack   = null;
+    let detector     = null;
+
+    // ── Helpers ────────────────────────────────────────────────────────────────
+    function fmtMs(ms) { return ms < 1000 ? ms + ' ms' : (ms/1000).toFixed(2) + ' s'; }
+
+    function recordScan(ean, fmt) {
+      const now = Date.now();
+      const ms  = timerStart != null ? now - timerStart : 0;
+      timerStart = null;
+
+      scans.unshift({ ean, fmt, ms });
+      if (scans.length > 10) scans.length = 10;
+
+      lastEl.classList.remove('waiting');
+      lastEl.querySelector('.ean').textContent  = ean;
+      lastEl.querySelector('.meta').textContent = fmt + '  ·  ' + fmtMs(ms) + ' depuis le tap';
+
+      histList.innerHTML = scans.map((s, i) => `
+        <li><span class="hi">${i+1}</span>
+            <span class="he">${s.ean}</span>
+            <span class="hf">${s.fmt}</span>
+            <span class="hm">${fmtMs(s.ms)}</span></li>`).join('');
+
+      statusEl.textContent = '✓ ' + ean + ' — ' + fmtMs(ms);
+      if ('vibrate' in navigator) navigator.vibrate(60);
+
+      // Arrêter la boucle, afficher le bouton
+      scanning = false;
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      btnNextW.classList.add('visible');
+    }
+
+    // ── Boucle de détection ────────────────────────────────────────────────────
+    let frameBusy = false;   // évite le chevauchement des appels async
+
+    async function detectFrame() {
+      if (!scanning || frameBusy || video.readyState < 2) {
+        if (scanning) rafId = requestAnimationFrame(detectFrame);
+        return;
+      }
+      frameBusy = true;
+      try {
+        const results = await detector.detect(video);
+        if (results.length > 0 && scanning) {
+          const r    = results[0];
+          const ean  = r.rawValue;
+          const fmt  = r.format || 'unknown';
+          const now  = Date.now();
+          if (ean !== lastCode || now - lastCodeTime > DEBOUNCE) {
+            lastCode     = ean;
+            lastCodeTime = now;
+            recordScan(ean, fmt);
+          }
+        }
+      } catch(e) {
+        // Ignorer les erreurs par frame (normales quand pas de code en vue)
+      }
+      frameBusy = false;
+      if (scanning) rafId = requestAnimationFrame(detectFrame);
+    }
+
+    function startLoop() {
+      if (scanning) return;
+      timerStart = Date.now();
+      scanning   = true;
+      btnNextW.classList.remove('visible');
+      statusEl.textContent = '📷 Scan en cours…';
+      rafId = requestAnimationFrame(detectFrame);
+    }
+
+    // ── Bouton "scan suivant" ──────────────────────────────────────────────────
+    btnNext.addEventListener('click', () => {
+      btnNext.textContent = '▶ Scanner le produit suivant';
+      startLoop();
+    });
+
+    // ── Init caméra + détecteur ────────────────────────────────────────────────
+    async function init() {
+      // 1. Vérifier que les scripts sont chargés
+      if (typeof zbarWasm === 'undefined' || typeof barcodeDetectorPolyfill === 'undefined') {
+        statusEl.textContent = '⚠️ Scripts WASM non chargés';
+        errorsEl.textContent += '[init] zbarWasm ou barcodeDetectorPolyfill introuvable\n';
+        return;
+      }
+
+      // 2. Créer le détecteur (formats: ean_13, ean_8, upc_a)
+      try {
+        const { BarcodeDetectorPolyfill } = barcodeDetectorPolyfill;
+        detector = new BarcodeDetectorPolyfill({ formats: ['ean_13', 'ean_8', 'upc_a'] });
+        statusEl.textContent = 'Moteur WASM prêt — ouverture de la caméra…';
+      } catch(e) {
+        statusEl.textContent = '⚠️ Erreur détecteur : ' + e.message;
+        errorsEl.textContent += '[detector] ' + e.message + '\n';
+        return;
+      }
+
+      // 3. Ouvrir la caméra
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: { ideal: 'environment' },
+            width:  { ideal: 1920 },
+            height: { ideal: 1080 },
+            advanced: [{ focusMode: 'continuous' }],
+          },
+          audio: false,
+        });
+
+        video.srcObject = stream;
+        await video.play();
+
+        videoTrack = stream.getVideoTracks()[0];
+        const s = videoTrack.getSettings();
+        debugEl.textContent =
+          'résolution : ' + (s.width||'?') + '×' + (s.height||'?') +
+          '  |  facingMode : ' + (s.facingMode||'?') +
+          '  |  focusMode : ' + (s.focusMode||'?');
+
+        // Torch
+        const caps = videoTrack.getCapabilities?.() || {};
+        if (caps.torch) {
+          btnTorch.classList.add('visible');
+        }
+
+        statusEl.textContent = '📷 Caméra prête — tap pour démarrer';
+        btnNextW.classList.add('visible');
+
+      } catch(e) {
+        statusEl.textContent = '⚠️ Erreur caméra : ' + e.message;
+        errorsEl.textContent += '[cam] ' + e.message + '\n';
+      }
+    }
+
+    init();
+
+    // ── Torch ──────────────────────────────────────────────────────────────────
+    btnTorch.addEventListener('click', async () => {
+      if (!videoTrack) return;
+      try {
+        torchOn = !torchOn;
+        await videoTrack.applyConstraints({ advanced: [{ torch: torchOn }] });
+        btnTorch.classList.toggle('on', torchOn);
+        btnTorch.textContent = torchOn ? '💡' : '🔦';
+      } catch(e) {
+        errorsEl.textContent += '[torch] ' + e.message + '\n';
+        torchOn = false; btnTorch.classList.remove('on');
+      }
+    });
+
+    // ── Saisie manuelle ────────────────────────────────────────────────────────
+    function submitManual() {
+      const v = mInput.value.trim().replace(/\D/g, '');
+      if (!v) return;
+      if (scanning) { scanning = false; if (rafId) cancelAnimationFrame(rafId); }
+      if (timerStart == null) timerStart = Date.now();
+      recordScan(v, 'MANUAL');
+      mInput.value = ''; mInput.blur();
+    }
+    mOk.addEventListener('click', submitManual);
+    mInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitManual(); });
+  </script>
+</body>
+</html>
