@@ -239,13 +239,9 @@
       ...(formats ? { formatsToSupport: formats } : {}),
     };
 
-    // Contraintes vidéo : résolution maximale + autofocus continu
-    const camConstraints = {
-      facingMode: { ideal: 'environment' },
-      width:  { ideal: 1920 },
-      height: { ideal: 1080 },
-      advanced: [{ focusMode: 'continuous' }],
-    };
+    // Contraintes caméra : facingMode uniquement.
+    // width/height et advanced.focusMode font échouer getUserMedia sur iOS Safari.
+    const camConstraints = { facingMode: { ideal: 'environment' } };
 
     scanner = new Html5Qrcode('reader', { verbose: false });
 
