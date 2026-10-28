@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Scanner html5-qrcode — Test</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
     :root {
-      --safe-top: env(safe-area-inset-top, 0px);
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
-      --bg: #0f172a; --surface: #1e293b; --border: #334155;
-      --text: #f1f5f9; --dim: #94a3b8; --accent: #2563eb;
-      --mono: 'Courier New', monospace;
+      --safe-top:env(safe-area-inset-top,0px);
+      --safe-bottom:env(safe-area-inset-bottom,0px);
+      --bg:#0f172a; --surface:#1e293b; --border:#334155;
+      --text:#f1f5f9; --dim:#94a3b8; --accent:#2563eb;
+      --mono:'Courier New',monospace;
     }
-    html, body { height: 100%; background: var(--bg); color: var(--text);
-      font-family: system-ui,-apple-system,sans-serif; -webkit-text-size-adjust:100%; }
+    html,body { height:100%; background:var(--bg); color:var(--text);
+      font-family:system-ui,-apple-system,sans-serif; -webkit-text-size-adjust:100%; }
     body { display:flex; flex-direction:column;
       padding-top:var(--safe-top); padding-bottom:var(--safe-bottom); overflow-x:hidden; }
 
@@ -23,34 +23,41 @@
     .hdr h1 { font-size:.95rem; font-weight:700; }
     .hdr p  { font-size:.68rem; color:var(--dim); margin-top:2px; }
 
-    #reader-wrap { position:relative; width:100%; background:#000; flex-shrink:0; }
-    #reader { width:100%; }
-    #reader video { width:100% !important; }
-    #reader img   { display:none !important; }
+    /* Zone de départ */
+    #start-section { flex-shrink:0; padding:16px; }
+    #btn-start { width:100%; height:56px; background:var(--accent); color:#fff;
+      border:none; border-radius:12px; font-size:1.05rem; font-weight:700;
+      cursor:pointer; -webkit-tap-highlight-color:transparent; }
+
+    /* Viewfinder — hauteur réservée AVANT que la vidéo charge */
+    #reader-wrap { position:relative; width:100%;
+      min-height:240px; background:#000; flex-shrink:0; display:none; }
+    /* html5-qrcode injecte video + canvas ici */
+    #reader { width:100%; min-height:240px; }
+    #reader video { width:100% !important; height:auto !important; display:block; }
+    #reader img { display:none !important; }
 
     /* Torch */
     #btn-torch { position:absolute; top:10px; right:10px; z-index:10;
       width:44px; height:44px; border:none; border-radius:22px;
-      background:rgba(0,0,0,.55); color:#fff; font-size:1.3rem;
-      cursor:pointer; display:none; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.55); color:#fff; font-size:1.3rem; cursor:pointer;
+      display:none; align-items:center; justify-content:center;
       -webkit-tap-highlight-color:transparent; }
     #btn-torch.visible { display:flex; }
     #btn-torch.on { background:rgba(255,220,0,.75); color:#000; }
 
     /* Bouton scan suivant */
-    #btn-next-wrap { flex-shrink:0; padding:10px 16px;
-      background:var(--bg); display:none; }
+    #btn-next-wrap { flex-shrink:0; padding:10px 16px; display:none; }
     #btn-next-wrap.visible { display:block; }
     #btn-next { width:100%; height:52px; background:var(--accent); color:#fff;
       border:none; border-radius:12px; font-size:1rem; font-weight:700;
       cursor:pointer; -webkit-tap-highlight-color:transparent; }
-    #btn-next:active { opacity:.85; }
 
     /* Status + debug */
-    #status  { flex-shrink:0; padding:5px 16px; font-size:.75rem; color:#fbbf24; min-height:26px; }
-    #debug   { flex-shrink:0; padding:3px 16px; font-size:.68rem; color:var(--dim);
+    #status { flex-shrink:0; padding:5px 16px; font-size:.78rem; color:#fbbf24; min-height:26px; }
+    #debug  { flex-shrink:0; padding:3px 16px; font-size:.67rem; color:var(--dim);
       font-family:var(--mono); white-space:pre-wrap; word-break:break-all; }
-    #errors  { flex-shrink:0; padding:3px 16px; font-size:.68rem; color:#f87171;
+    #errors { flex-shrink:0; padding:3px 16px; font-size:.67rem; color:#f87171;
       font-family:var(--mono); white-space:pre-wrap; word-break:break-all; min-height:0; }
 
     /* Dernier scan */
@@ -60,8 +67,7 @@
       text-transform:uppercase; letter-spacing:.08em; margin-bottom:2px; }
     #last-result .ean { font-family:var(--mono); font-size:1.3rem; font-weight:700;
       color:#4ade80; letter-spacing:.04em; }
-    #last-result.waiting .ean { color:var(--dim); font-size:.85rem;
-      font-family:inherit; font-weight:400; }
+    #last-result.waiting .ean { color:var(--dim); font-size:.85rem; font-family:inherit; font-weight:400; }
     #last-result .meta { font-size:.7rem; color:var(--dim); margin-top:2px; }
 
     /* Historique */
@@ -80,8 +86,7 @@
 
     /* Saisie manuelle */
     #manual { flex-shrink:0; padding:8px 16px;
-      background:var(--surface); border-top:1px solid var(--border);
-      display:flex; gap:8px; }
+      background:var(--surface); border-top:1px solid var(--border); display:flex; gap:8px; }
     #m-input { flex:1; background:var(--bg); border:1px solid var(--border);
       border-radius:8px; color:var(--text); font-size:1rem;
       padding:0 10px; height:44px; font-family:var(--mono); -webkit-appearance:none; }
@@ -94,19 +99,25 @@
 
   <div class="hdr">
     <h1>html5-qrcode 2.3.8 — Test</h1>
-    <p>EAN-13 · EAN-8 · UPC-A &nbsp;|&nbsp; Caméra arrière &nbsp;|&nbsp; Scan continu</p>
+    <p>Tous formats (EAN-13/8, UPC-A…) &nbsp;|&nbsp; Caméra arrière</p>
   </div>
 
+  <!-- Bouton de démarrage (user-gesture → getUserMedia) -->
+  <div id="start-section">
+    <button id="btn-start">📷 Lancer la caméra</button>
+  </div>
+
+  <!-- Viewfinder — caché jusqu'au lancement -->
   <div id="reader-wrap">
     <div id="reader"></div>
     <button id="btn-torch" aria-label="Lampe torche">🔦</button>
   </div>
 
-  <div id="status">Initialisation…</div>
+  <div id="status">Appuyez sur "Lancer la caméra"</div>
   <div id="debug">résolution : —</div>
   <div id="errors"></div>
 
-  <!-- Bouton "scan suivant" — visible après chaque détection -->
+  <!-- Bouton "scan suivant" -->
   <div id="btn-next-wrap">
     <button id="btn-next">▶ Scanner le produit suivant</button>
   </div>
@@ -134,148 +145,115 @@
   <script>
     'use strict';
 
-    // ── Afficher les erreurs JS sur l'écran ────────────────────────────────────
+    // ── Erreurs JS visibles à l'écran ──────────────────────────────────────────
     const errorsEl = document.getElementById('errors');
-    window.addEventListener('error', e => {
-      errorsEl.textContent += '[JS] ' + e.message + ' (' + (e.filename||'').split('/').pop() + ':' + e.lineno + ')\n';
-    });
+    window.onerror = (msg, src, line) => {
+      errorsEl.textContent += '[JS] ' + msg + ' (' + (src||'').split('/').pop() + ':' + line + ')\n';
+      return false;
+    };
     window.addEventListener('unhandledrejection', e => {
-      errorsEl.textContent += '[Promise] ' + (e.reason?.message || String(e.reason)) + '\n';
+      errorsEl.textContent += '[P] ' + (e.reason?.message || String(e.reason)) + '\n';
     });
 
-    const statusEl  = document.getElementById('status');
-    const debugEl   = document.getElementById('debug');
-    const lastEl    = document.getElementById('last-result');
-    const histList  = document.getElementById('hist-list');
-    const btnTorch  = document.getElementById('btn-torch');
-    const btnNextW  = document.getElementById('btn-next-wrap');
-    const btnNext   = document.getElementById('btn-next');
-    const mInput    = document.getElementById('m-input');
-    const mOk       = document.getElementById('m-ok');
+    const statusEl = document.getElementById('status');
+    const debugEl  = document.getElementById('debug');
+    const lastEl   = document.getElementById('last-result');
+    const histList = document.getElementById('hist-list');
+    const btnTorch = document.getElementById('btn-torch');
+    const btnNextW = document.getElementById('btn-next-wrap');
+    const btnNext  = document.getElementById('btn-next');
+    const mInput   = document.getElementById('m-input');
+    const mOk      = document.getElementById('m-ok');
 
     let scans        = [];
     let timerStart   = null;
-    // Scan continu : on mémorise le dernier code lu pour le debounce
     let lastCode     = null;
     let lastCodeTime = 0;
-    const DEBOUNCE   = 2000;    // ms entre deux lectures du même code
+    const DEBOUNCE   = 2000;
     let torchOn      = false;
     let torchFeature = null;
     let scanner      = null;
 
-    // ── Helpers ────────────────────────────────────────────────────────────────
     function fmtMs(ms) { return ms < 1000 ? ms + ' ms' : (ms/1000).toFixed(2) + ' s'; }
     function fmtFmt(f) { return (f || '?').replace(/_/g, '-'); }
 
     function recordScan(ean, fmt) {
       const now = Date.now();
       const ms  = timerStart != null ? now - timerStart : 0;
-      timerStart = null;    // arrêter le chrono — redémarre sur btnNext
+      timerStart = null;
 
-      const entry = { ean, fmt: fmtFmt(fmt), ms };
-      scans.unshift(entry);
+      scans.unshift({ ean, fmt: fmtFmt(fmt), ms });
       if (scans.length > 10) scans.length = 10;
 
       lastEl.classList.remove('waiting');
       lastEl.querySelector('.ean').textContent  = ean;
-      lastEl.querySelector('.meta').textContent = entry.fmt + '  ·  ' + fmtMs(ms) + ' depuis le tap';
+      lastEl.querySelector('.meta').textContent = fmtFmt(fmt) + '  ·  ' + fmtMs(ms) + ' depuis le tap';
 
-      histList.innerHTML = scans.map((s, i) => `
-        <li><span class="hi">${i+1}</span>
-            <span class="he">${s.ean}</span>
-            <span class="hf">${s.fmt}</span>
-            <span class="hm">${fmtMs(s.ms)}</span></li>`).join('');
+      histList.innerHTML = scans.map((s, i) =>
+        `<li><span class="hi">${i+1}</span><span class="he">${s.ean}</span>` +
+        `<span class="hf">${s.fmt}</span><span class="hm">${fmtMs(s.ms)}</span></li>`
+      ).join('');
 
       statusEl.textContent = '✓ ' + ean + ' — ' + fmtMs(ms);
       if ('vibrate' in navigator) navigator.vibrate(60);
-
-      // Afficher le bouton "scan suivant"
       btnNextW.classList.add('visible');
     }
 
-    function onScan(decodedText, result) {
+    function onScan(ean, result) {
       const now = Date.now();
-      // Debounce : ignorer la relecture du même code en moins de DEBOUNCE ms
-      if (decodedText === lastCode && now - lastCodeTime < DEBOUNCE) return;
-      lastCode     = decodedText;
-      lastCodeTime = now;
-      const fmt = result?.result?.format?.formatName ?? 'UNKNOWN';
-      recordScan(decodedText, fmt);
+      if (ean === lastCode && now - lastCodeTime < DEBOUNCE) return;
+      lastCode = ean; lastCodeTime = now;
+      recordScan(ean, result?.result?.format?.formatName ?? 'UNKNOWN');
     }
 
-    // ── Bouton "scan suivant" ──────────────────────────────────────────────────
-    // Démarre / relance le chrono ; le scanner tourne TOUJOURS en continu.
     btnNext.addEventListener('click', () => {
       timerStart = Date.now();
       btnNextW.classList.remove('visible');
       statusEl.textContent = '📷 Scan en cours…';
     });
 
-    // ── Init scanner ───────────────────────────────────────────────────────────
-    // Construire formatsToSupport en sécurité
-    let formats;
-    try {
-      formats = [
-        Html5QrcodeSupportedFormats.EAN_13,
-        Html5QrcodeSupportedFormats.EAN_8,
-        Html5QrcodeSupportedFormats.UPC_A,
-      ];
-    } catch(e) {
-      errorsEl.textContent += '[formats] Html5QrcodeSupportedFormats indisponible — scan tous formats\n';
-      formats = undefined;
-    }
+    // ── Lancement caméra (user-gesture) ────────────────────────────────────────
+    document.getElementById('btn-start').addEventListener('click', () => {
+      // Cacher le bouton de départ, afficher le viewfinder
+      document.getElementById('start-section').style.display = 'none';
+      document.getElementById('reader-wrap').style.display   = 'block';
+      statusEl.textContent = 'Ouverture de la caméra…';
 
-    function qrboxFn(vw) {
-      const w = Math.min(Math.round(vw * 0.9), 360);
-      return { width: w, height: Math.round(w * 0.38) };   // rectangle large pour EAN
-    }
+      scanner = new Html5Qrcode('reader', { verbose: false });
 
-    const config = {
-      fps: 10,
-      qrbox: qrboxFn,
-      aspectRatio: 1.33,          // 4:3
-      rememberLastUsedCamera: false,
-      showTorchButtonIfSupported: false,
-      ...(formats ? { formatsToSupport: formats } : {}),
-    };
+      // Config minimale — pas d'aspectRatio, pas de formatsToSupport
+      scanner.start(
+        { facingMode: 'environment' },
+        {
+          fps: 10,
+          qrbox: { width: 280, height: 110 },   // rectangle fixe, pas de fonction
+        },
+        onScan,
+        (_err) => {}   // erreurs par frame = normales
+      ).then(() => {
+        timerStart = Date.now();
+        statusEl.textContent = '📷 Caméra active — pointez vers un code-barres';
 
-    // Contraintes caméra : facingMode uniquement.
-    // width/height et advanced.focusMode font échouer getUserMedia sur iOS Safari.
-    const camConstraints = { facingMode: { ideal: 'environment' } };
+        // Résolution réelle
+        try {
+          const t = scanner.getRunningTrackSettings();
+          debugEl.textContent = 'résolution : ' + t.width + '×' + t.height +
+            '  |  facing : ' + (t.facingMode || '?');
+        } catch(_) {}
 
-    scanner = new Html5Qrcode('reader', { verbose: false });
-
-    scanner.start(
-      camConstraints,
-      config,
-      onScan,
-      (_err) => {}    // erreurs par frame = normales
-    ).then(() => {
-      // Chrono commence dès l'ouverture (premier scan)
-      timerStart = Date.now();
-      statusEl.textContent = '📷 Caméra active — pointez vers un code-barres';
-
-      // Afficher la résolution réelle
-      try {
-        const track = scanner.getRunningTrackSettings();
-        debugEl.textContent =
-          'résolution : ' + track.width + '×' + track.height +
-          '  |  facingMode : ' + (track.facingMode || '?') +
-          '  |  focusMode : ' + (track.focusMode || '?');
-      } catch(e) {
-        debugEl.textContent = 'résolution : getRunningTrackSettings() indisponible';
-      }
-
-      // Torch
-      try {
-        const caps = scanner.getRunningTrackCameraCapabilities();
-        torchFeature = caps.torchFeature();
-        if (torchFeature?.isSupported()) btnTorch.classList.add('visible');
-      } catch(_) {}
-
-    }).catch(err => {
-      statusEl.textContent = '⚠️ Erreur caméra : ' + err;
-      errorsEl.textContent += '[cam] ' + err + '\n';
+        // Torch
+        try {
+          const caps = scanner.getRunningTrackCameraCapabilities();
+          torchFeature = caps.torchFeature();
+          if (torchFeature?.isSupported()) btnTorch.classList.add('visible');
+        } catch(_) {}
+      }).catch(err => {
+        statusEl.textContent = '⚠️ Erreur caméra : ' + err;
+        errorsEl.textContent += '[cam] ' + String(err) + '\n';
+        // Ré-afficher le bouton de départ en cas d'erreur
+        document.getElementById('start-section').style.display = 'block';
+        document.getElementById('reader-wrap').style.display   = 'none';
+      });
     });
 
     // ── Torch ──────────────────────────────────────────────────────────────────
