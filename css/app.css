@@ -849,7 +849,7 @@ dialog .dialog-actions {
 /* --- Update Banner --- */
 .update-banner {
   position: fixed;
-  top: calc(var(--safe-top) + var(--header-h));
+  bottom: calc(var(--safe-bottom) + var(--tab-h));
   left: 0;
   right: 0;
   z-index: 150;
@@ -861,8 +861,8 @@ dialog .dialog-actions {
   justify-content: space-between;
   font-size: 0.85rem;
   font-weight: 600;
-  box-shadow: 0 2px 8px var(--shadow);
-  transform: translateY(-100%);
+  box-shadow: 0 -2px 8px var(--shadow);
+  transform: translateY(100%);
   transition: transform 0.3s ease;
 }
 

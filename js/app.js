@@ -25,39 +25,40 @@ function initServiceWorker() {
       const newWorker = reg.installing;
       if (newWorker) {
         newWorker.addEventListener('statechange', () => {
+          // Only show if there was already a controller (not first install)
           if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            showUpdateBanner();
+            showUpdateBanner(reg);
           }
         });
       }
     });
   }).catch(err => console.error('SW registration failed:', err));
+}
 
-  // Listen for NEW_VERSION message from SW
-  navigator.serviceWorker.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'NEW_VERSION') {
-      showUpdateBanner();
-    }
+function showUpdateBanner(reg) {
+  // Guard: only show if a waiting worker actually exists
+  navigator.serviceWorker.getRegistration().then((r) => {
+    const registration = reg || r;
+    if (!registration || !registration.waiting) return;
+    const banner = document.getElementById('update-banner');
+    if (banner) banner.classList.add('update-banner--visible');
   });
 }
 
-function showUpdateBanner() {
+function hideUpdateBanner() {
   const banner = document.getElementById('update-banner');
-  if (banner) banner.classList.add('update-banner--visible');
+  if (banner) banner.classList.remove('update-banner--visible');
 }
 
 function applyUpdate() {
-  if (navigator.serviceWorker.controller) {
-    navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
-  }
-  // Also tell any waiting worker
-  navigator.serviceWorker.getRegistration().then(reg => {
-    if (reg && reg.waiting) {
-      reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-    }
+  navigator.serviceWorker.getRegistration().then((reg) => {
+    if (!reg || !reg.waiting) return;
+    // Reload as soon as the new SW takes control
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      location.reload();
+    }, { once: true });
+    reg.waiting.postMessage({ type: 'SKIP_WAITING' });
   });
-  // Reload after a moment
-  setTimeout(() => location.reload(), 500);
 }
 
 // ---- Theme ----
@@ -197,6 +198,10 @@ async function init() {
   const updateBtn = document.getElementById('btn-update');
   if (updateBtn) {
     updateBtn.addEventListener('click', applyUpdate);
+  }
+  const updateCloseBtn = document.getElementById('btn-update-close');
+  if (updateCloseBtn) {
+    updateCloseBtn.addEventListener('click', hideUpdateBanner);
   }
 
   // Navigate to default screen
