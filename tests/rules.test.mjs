@@ -22,6 +22,7 @@ import {
   getDoc,
   setDoc,
   updateDoc,
+  deleteDoc,
   collection,
   getDocs,
   arrayUnion,
@@ -229,6 +230,89 @@ await test('Sec 8 — Inconnu lit sous-collection courses : refusé', async () =
   const ctx = testEnv.authenticatedContext(UID_X);
   await assertFails(
     getDocs(collection(ctx.firestore(), 'foyers', FOYER_ID, 'courses'))
+  );
+});
+
+// ─── Tests sous-collections (écriture depuis courses.js) ─────────────────────
+
+await seedFoyerAlice();
+
+// 13. Membre crée un article courses avec exactement les champs de addArticle()
+//     (prixReel:null, badge:null, badgeForce:null, kitOriginId:null…)
+await test('Sub 1 — Membre crée un article courses (champs null) : accepté', async () => {
+  const ctx = testEnv.authenticatedContext(UID_A);
+  const db  = ctx.firestore();
+  await assertSucceeds(
+    setDoc(doc(db, 'foyers', FOYER_ID, 'courses', 'article_test_001'), {
+      nom: 'Lait',
+      quantite: 1,
+      unite: '',
+      magasin: '',
+      rayon: '',
+      prixEstime: 0,
+      prixReel: null,
+      badge: null,
+      badgeForce: null,
+      checked: false,
+      checkedBy: null,
+      checkedByPrenom: null,
+      kitOriginId: null,
+    })
+  );
+});
+
+// 14. Membre coche un article (toggleChecked)
+await test('Sub 2 — Membre coche un article (checked:true) : accepté', async () => {
+  const ctx = testEnv.authenticatedContext(UID_A);
+  const db  = ctx.firestore();
+  await assertSucceeds(
+    updateDoc(doc(db, 'foyers', FOYER_ID, 'courses', 'article_test_001'), {
+      checked: true,
+      checkedBy: UID_A,
+      checkedByPrenom: 'Alice',
+    })
+  );
+});
+
+// 15. Membre ajoute un lot dans stock (datePeremption:null)
+await test('Sub 3 — Membre ajoute un lot stock (datePeremption:null) : accepté', async () => {
+  await testEnv.withSecurityRulesDisabled(async (ctx) => {
+    await setDoc(doc(ctx.firestore(), 'foyers', FOYER_ID, 'stock', 'prod_001'), {
+      nom: 'Lait UHT', lots: [],
+    });
+  });
+  const ctx = testEnv.authenticatedContext(UID_A);
+  const db  = ctx.firestore();
+  await assertSucceeds(
+    updateDoc(doc(db, 'foyers', FOYER_ID, 'stock', 'prod_001'), {
+      lots: [{ id: 'lot_001', quantite: 2, datePeremption: null, ajouteLe: new Date().toISOString() }],
+    })
+  );
+});
+
+// 16. Membre crée un achat avec prixReel:null dans les articles
+await test('Sub 4 — Membre crée un achat (prixReel:null) : accepté', async () => {
+  const ctx = testEnv.authenticatedContext(UID_A);
+  const db  = ctx.firestore();
+  await assertSucceeds(
+    setDoc(doc(db, 'foyers', FOYER_ID, 'achats', 'achat_001'), {
+      magasin: 'Carrefour',
+      mois: '2026-10',
+      date: new Date().toISOString(),
+      total: 3.50,
+      articles: [{ nom: 'Lait', quantite: 1, prixReel: null, prixEstime: 0 }],
+    })
+  );
+});
+
+// 17. Inconnu ne peut pas écrire dans courses
+await test('Sub 5 — Inconnu crée un article courses : refusé', async () => {
+  const ctx = testEnv.authenticatedContext(UID_X);
+  const db  = ctx.firestore();
+  await assertFails(
+    setDoc(doc(db, 'foyers', FOYER_ID, 'courses', 'article_stranger'), {
+      nom: 'Pain', quantite: 1,
+    })
   );
 });
 

@@ -77,9 +77,13 @@ export function renderCourses(container) {
       </div>
 
       <div class="autocomplete">
-        <input type="text" class="input" id="courses-input" placeholder="Ajouter : lait, 6 œufs, pain..." autocomplete="off">
+        <div style="display:flex;gap:8px;">
+          <input type="text" class="input" id="courses-input" placeholder="Ajouter : lait, 6 œufs, pain..." autocomplete="off" style="flex:1;" inputmode="text" enterkeyhint="done">
+          <button class="btn btn--primary" id="btn-add-article" type="button" aria-label="Ajouter" style="flex-shrink:0;padding:0 18px;">+</button>
+        </div>
         <div class="autocomplete__list" id="courses-autocomplete"></div>
       </div>
+      <div id="courses-error" role="alert" style="display:none;margin-top:8px;padding:10px 14px;background:var(--alert,#f44);color:#fff;border-radius:8px;font-size:0.9rem;"></div>
 
       <div class="flex-between mt-12 mb-12">
         <label style="display:flex;align-items:center;gap:6px;font-size:0.82rem;cursor:pointer;">
@@ -123,11 +127,48 @@ export function renderCourses(container) {
   subscribeToCourses();
 }
 
+function showCoursesError(msg) {
+  const el = document.getElementById('courses-error');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.display = 'block';
+  clearTimeout(el._hideTimer);
+  el._hideTimer = setTimeout(() => { el.style.display = 'none'; }, 6000);
+}
+
 function bindEvents() {
   const input = document.getElementById('courses-input');
   const autocompleteEl = document.getElementById('courses-autocomplete');
 
-  // Input: autocomplete + add on Enter
+  // Shared add handler — triggered by Enter key OR button click
+  function doAdd() {
+    const val = input.value.trim();
+    if (!val) return;
+    const parsed = parseInput(val);
+    for (const p of parsed) {
+      const fav = favoris.find(f => f.nom.toLowerCase() === p.nom.toLowerCase());
+      if (fav) {
+        addArticle({ ...fav, quantite: p.quantite });
+      } else {
+        addArticle({ nom: p.nom, quantite: p.quantite });
+      }
+    }
+    input.value = '';
+    autocompleteEl.classList.remove('autocomplete__list--visible');
+  }
+
+  // Bouton Ajouter (clic, toucher)
+  document.getElementById('btn-add-article').addEventListener('click', doAdd);
+
+  // Touche Entrée / Retour clavier iPhone (enterkeyhint="done")
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      doAdd();
+    }
+  });
+
+  // Input: autocomplete
   input.addEventListener('input', () => {
     const val = input.value.trim();
     if (val.length < 2) {
@@ -157,26 +198,6 @@ function bindEvents() {
     addArticle(fav);
     input.value = '';
     autocompleteEl.classList.remove('autocomplete__list--visible');
-  });
-
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      const val = input.value.trim();
-      if (!val) return;
-      const parsed = parseInput(val);
-      for (const p of parsed) {
-        // Check if favori exists
-        const fav = favoris.find(f => f.nom.toLowerCase() === p.nom.toLowerCase());
-        if (fav) {
-          addArticle({ ...fav, quantite: p.quantite });
-        } else {
-          addArticle({ nom: p.nom, quantite: p.quantite });
-        }
-      }
-      input.value = '';
-      autocompleteEl.classList.remove('autocomplete__list--visible');
-    }
   });
 
   // Hide checked toggle
@@ -244,6 +265,7 @@ async function addArticle(data) {
     });
   } catch (e) {
     console.error('addArticle error:', e);
+    showCoursesError('Impossible d\'enregistrer : ' + (e.message || e.code || 'erreur inconnue'));
   }
 }
 
@@ -402,6 +424,7 @@ async function toggleChecked(id, checked) {
     });
   } catch (e) {
     console.error('toggleChecked error:', e);
+    showCoursesError('Impossible de cocher : ' + (e.message || e.code || 'erreur inconnue'));
   }
 }
 
@@ -412,6 +435,7 @@ async function updateArticlePrice(id, price) {
     await updateDoc(doc(db, 'foyers', fid, 'courses', id), { prixReel: price });
   } catch (e) {
     console.error('updateArticlePrice error:', e);
+    showCoursesError('Impossible de mettre à jour le prix : ' + (e.message || e.code || 'erreur inconnue'));
   }
 }
 

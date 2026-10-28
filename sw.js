@@ -1,5 +1,5 @@
 // Service Worker — Réserves & Courses
-const CACHE_NAME = 'reserves-v4';
+const CACHE_NAME = 'reserves-v5';
 
 // NOTE POLICES : les URLs Google Fonts varient selon le navigateur (User-Agent).
 // Pour garantir les polices hors ligne dès le premier lancement, deux options :
