@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Scanner — Test de lecture</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --accent: #2563eb;
+      --ok: #16a34a;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --border: #334155;
+      --text: #f1f5f9;
+      --text-dim: #94a3b8;
+      --mono: 'Courier New', monospace;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      padding-top: var(--safe-top);
+      padding-bottom: var(--safe-bottom);
+      overflow-x: hidden;
+    }
+
+    /* ── Header ── */
+    .header {
+      padding: 12px 16px 8px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .header h1 { font-size: 1rem; font-weight: 700; letter-spacing: .02em; }
+    .header p  { font-size: 0.72rem; color: var(--text-dim); margin-top: 2px; }
+
+    /* ── Viewfinder wrapper ── */
+    #reader-wrap {
+      position: relative;
+      width: 100%;
+      background: #000;
+      flex-shrink: 0;
+    }
+
+    /* html5-qrcode injects its own video + canvas here */
+    #reader {
+      width: 100%;
+    }
+
+    /* Override the default square scan box injected by the lib
+       (the lib respects qrbox dimensions — this just cleans up visual cruft) */
+    #reader video { width: 100% !important; }
+    #reader img { display: none !important; }
+
+    /* Torch button — superimposed top-right */
+    #btn-torch {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+      width: 44px;
+      height: 44px;
+      border: none;
+      border-radius: 22px;
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #btn-torch.visible { display: flex; }
+    #btn-torch.on { background: rgba(255,220,0,0.75); color: #000; }
+
+    /* ── Last scan result ── */
+    #last-result {
+      flex-shrink: 0;
+      padding: 12px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      min-height: 68px;
+    }
+    #last-result .label {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 4px;
+    }
+    #last-result .ean {
+      font-family: var(--mono);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #4ade80;
+      letter-spacing: .05em;
+    }
+    #last-result .meta {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-top: 3px;
+    }
+    #last-result.waiting .ean { color: var(--text-dim); font-size: 0.9rem; font-family: inherit; font-weight: 400; }
+
+    /* ── History ── */
+    #history-section {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .history-header {
+      padding: 10px 16px 6px;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 1;
+    }
+
+    #history-list {
+      list-style: none;
+      padding: 0 16px 16px;
+    }
+
+    #history-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    #history-list li:last-child { border-bottom: none; }
+
+    .hist-idx  { font-size: 0.7rem; color: var(--text-dim); width: 18px; flex-shrink: 0; text-align: right; }
+    .hist-ean  { font-family: var(--mono); font-size: 0.95rem; font-weight: 700; flex: 1; }
+    .hist-fmt  { font-size: 0.68rem; color: var(--text-dim); flex-shrink: 0; }
+    .hist-ms   { font-size: 0.75rem; color: #facc15; flex-shrink: 0; min-width: 52px; text-align: right; }
+
+    /* ── Manual entry ── */
+    #manual-section {
+      flex-shrink: 0;
+      padding: 10px 16px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+    }
+    #manual-input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 1rem;
+      padding: 0 12px;
+      height: 44px;
+      font-family: var(--mono);
+      -webkit-appearance: none;
+    }
+    #manual-submit {
+      height: 44px;
+      padding: 0 16px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
+    }
+
+    /* ── Status / errors ── */
+    #status {
+      padding: 8px 16px;
+      font-size: 0.8rem;
+      color: #fbbf24;
+      background: var(--bg);
+      flex-shrink: 0;
+      min-height: 32px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Scanner — Test de lecture</h1>
+    <p>EAN-13 · EAN-8 · UPC-A &nbsp;|&nbsp; Caméra arrière &nbsp;|&nbsp; html5-qrcode 2.3.8</p>
+  </div>
+
+  <div id="reader-wrap">
+    <div id="reader"></div>
+    <button id="btn-torch" aria-label="Lampe torche">🔦</button>
+  </div>
+
+  <div id="status">Initialisation de la caméra…</div>
+
+  <div id="last-result" class="waiting">
+    <div class="label">Dernier scan</div>
+    <div class="ean">En attente…</div>
+    <div class="meta"></div>
+  </div>
+
+  <div id="history-section">
+    <div class="history-header">Historique (10 derniers)</div>
+    <ul id="history-list">
+      <li style="color:var(--text-dim);font-size:0.8rem;padding:10px 0;border:none;">Aucun scan pour le moment.</li>
+    </ul>
+  </div>
+
+  <div id="manual-section">
+    <input id="manual-input" type="text" inputmode="numeric" pattern="[0-9]*"
+           placeholder="Saisir un code manuellement" maxlength="14" enterkeyhint="done">
+    <button id="manual-submit">OK</button>
+  </div>
+
+  <!-- html5-qrcode — chargement depuis CDN pour cette page de test -->
+  <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script>
+    'use strict';
+
+    const statusEl     = document.getElementById('status');
+    const lastResult   = document.getElementById('last-result');
+    const historyList  = document.getElementById('history-list');
+    const btnTorch     = document.getElementById('btn-torch');
+    const manualInput  = document.getElementById('manual-input');
+    const manualSubmit = document.getElementById('manual-submit');
+
+    let scans       = [];    // array of {ean, format, ms}
+    let openTime    = null;  // Date.now() when camera is ready
+    let lastTime    = null;  // Date.now() of last successful scan
+    let torchOn     = false;
+    let torchFeature = null;
+    let scanner     = null;
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
+    function formatMs(ms) {
+      return ms < 1000 ? ms + ' ms' : (ms / 1000).toFixed(1) + ' s';
+    }
+
+    function shortFormat(fmt) {
+      // html5-qrcode returns e.g. "QR_CODE", "EAN_13", "UPC_A"
+      return (fmt || '?').replace('_', '-');
+    }
+
+    function recordScan(ean, fmt) {
+      const now  = Date.now();
+      const ref  = lastTime ?? openTime ?? now;
+      const ms   = now - ref;
+      lastTime   = now;
+
+      const entry = { ean, fmt: shortFormat(fmt), ms };
+      scans.unshift(entry);
+      if (scans.length > 10) scans.length = 10;
+
+      // Update last-result panel
+      lastResult.classList.remove('waiting');
+      lastResult.querySelector('.ean').textContent  = ean;
+      lastResult.querySelector('.meta').textContent =
+        `${entry.fmt}  ·  ${formatMs(ms)}  depuis ${lastTime === now && scans.length === 1 ? "l'ouverture" : "le scan précédent"}`;
+
+      // Rebuild history
+      historyList.innerHTML = scans.map((s, i) => `
+        <li>
+          <span class="hist-idx">${i + 1}</span>
+          <span class="hist-ean">${s.ean}</span>
+          <span class="hist-fmt">${s.fmt}</span>
+          <span class="hist-ms">${formatMs(s.ms)}</span>
+        </li>
+      `).join('');
+
+      // Vibrate if available
+      if ('vibrate' in navigator) navigator.vibrate(60);
+    }
+
+    // ── Scanner init ──────────────────────────────────────────────────────────
+
+    function qrboxFn(vw, vh) {
+      // Wide rectangle : ~85 % de la largeur, ~30 % de la largeur en hauteur
+      const w = Math.min(Math.round(vw * 0.85), 340);
+      const h = Math.round(w * 0.32);
+      return { width: w, height: h };
+    }
+
+    const config = {
+      fps: 15,
+      qrbox: qrboxFn,
+      aspectRatio: 1.5,           // 3:2 — plus large que haut, adapté aux codes barres
+      formatsToSupport: [
+        Html5QrcodeSupportedFormats.EAN_13,
+        Html5QrcodeSupportedFormats.EAN_8,
+        Html5QrcodeSupportedFormats.UPC_A,
+      ],
+      rememberLastUsedCamera: false,
+      showTorchButtonIfSupported: false,   // on gère le bouton nous-mêmes
+    };
+
+    scanner = new Html5Qrcode('reader', { verbose: false });
+
+    scanner.start(
+      { facingMode: 'environment' },
+      config,
+      // Success
+      (decodedText, decodedResult) => {
+        const fmt = decodedResult?.result?.format?.formatName ?? 'UNKNOWN';
+        recordScan(decodedText, fmt);
+        statusEl.textContent = '✓ Scan réussi — en attente du prochain…';
+      },
+      // Per-frame failure (normal — ne pas afficher)
+      (_err) => {}
+    ).then(() => {
+      openTime  = Date.now();
+      lastTime  = openTime;
+      statusEl.textContent = '📷 Caméra active — pointez vers un code-barres';
+
+      // Torch
+      try {
+        const caps = scanner.getRunningTrackCameraCapabilities();
+        torchFeature = caps.torchFeature();
+        if (torchFeature && torchFeature.isSupported()) {
+          btnTorch.classList.add('visible');
+        }
+      } catch (e) {
+        // Torch non supporté — silencieux
+      }
+    }).catch((err) => {
+      statusEl.textContent = '⚠️ Erreur caméra : ' + err;
+    });
+
+    // ── Torch toggle ──────────────────────────────────────────────────────────
+
+    btnTorch.addEventListener('click', async () => {
+      if (!torchFeature) return;
+      try {
+        torchOn = !torchOn;
+        await torchFeature.apply(torchOn);
+        btnTorch.classList.toggle('on', torchOn);
+        btnTorch.textContent = torchOn ? '💡' : '🔦';
+      } catch (e) {
+        statusEl.textContent = '⚠️ Lampe torche indisponible';
+        torchOn = false;
+        btnTorch.classList.remove('on');
+      }
+    });
+
+    // ── Saisie manuelle ───────────────────────────────────────────────────────
+
+    function submitManual() {
+      const val = manualInput.value.trim().replace(/\D/g, '');
+      if (!val) return;
+      recordScan(val, 'MANUAL');
+      statusEl.textContent = '⌨️ Saisie manuelle enregistrée';
+      manualInput.value = '';
+      manualInput.blur();
+    }
+
+    manualSubmit.addEventListener('click', submitManual);
+    manualInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') submitManual();
+    });
+  </script>
+
+</body>
+</html>
