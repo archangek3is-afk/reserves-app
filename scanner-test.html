@@ -11,7 +11,6 @@
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
       --accent: #2563eb;
-      --ok: #16a34a;
       --bg: #0f172a;
       --surface: #1e293b;
       --border: #334155;
@@ -38,33 +37,43 @@
 
     /* ── Header ── */
     .header {
-      padding: 12px 16px 8px;
+      padding: 10px 16px 6px;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
     }
-    .header h1 { font-size: 1rem; font-weight: 700; letter-spacing: .02em; }
-    .header p  { font-size: 0.72rem; color: var(--text-dim); margin-top: 2px; }
+    .header h1 { font-size: 0.95rem; font-weight: 700; }
+    .header p  { font-size: 0.68rem; color: var(--text-dim); margin-top: 2px; }
 
-    /* ── Viewfinder wrapper ── */
+    /* ── Viewfinder ── */
     #reader-wrap {
       position: relative;
       width: 100%;
       background: #000;
       flex-shrink: 0;
     }
+    #reader { width: 100%; }
+    #reader video { width: 100% !important; }
+    #reader img   { display: none !important; }
 
-    /* html5-qrcode injects its own video + canvas here */
-    #reader {
-      width: 100%;
+    /* Overlay "En pause" par-dessus le viewfinder */
+    #pause-overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+    #pause-overlay.visible { display: flex; }
+    #pause-overlay span {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: .05em;
     }
 
-    /* Override the default square scan box injected by the lib
-       (the lib respects qrbox dimensions — this just cleans up visual cruft) */
-    #reader video { width: 100% !important; }
-    #reader img { display: none !important; }
-
-    /* Torch button — superimposed top-right */
+    /* Torch — top-right */
     #btn-torch {
       position: absolute;
       top: 10px;
@@ -86,45 +95,83 @@
     #btn-torch.visible { display: flex; }
     #btn-torch.on { background: rgba(255,220,0,0.75); color: #000; }
 
-    /* ── Last scan result ── */
-    #last-result {
+    /* ── Bouton "Scanner le produit suivant" ── */
+    #btn-next-wrap {
       flex-shrink: 0;
       padding: 12px 16px;
+      background: var(--bg);
+      /* affiché uniquement après un scan */
+      display: none;
+    }
+    #btn-next-wrap.visible { display: block; }
+    #btn-next {
+      width: 100%;
+      height: 56px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      letter-spacing: .01em;
+    }
+    #btn-next:active { opacity: 0.85; }
+
+    /* ── Status ── */
+    #status {
+      flex-shrink: 0;
+      padding: 6px 16px;
+      font-size: 0.78rem;
+      color: #fbbf24;
+      background: var(--bg);
+      min-height: 28px;
+    }
+
+    /* ── Dernier scan ── */
+    #last-result {
+      flex-shrink: 0;
+      padding: 10px 16px;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      min-height: 68px;
+      min-height: 62px;
     }
     #last-result .label {
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       color: var(--text-dim);
       text-transform: uppercase;
       letter-spacing: .08em;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
     #last-result .ean {
       font-family: var(--mono);
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: #4ade80;
-      letter-spacing: .05em;
+      letter-spacing: .04em;
+    }
+    #last-result.waiting .ean {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      font-family: inherit;
+      font-weight: 400;
     }
     #last-result .meta {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-dim);
-      margin-top: 3px;
+      margin-top: 2px;
     }
-    #last-result.waiting .ean { color: var(--text-dim); font-size: 0.9rem; font-family: inherit; font-weight: 400; }
 
-    /* ── History ── */
+    /* ── Historique ── */
     #history-section {
       flex: 1;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
-
     .history-header {
-      padding: 10px 16px 6px;
-      font-size: 0.65rem;
+      padding: 8px 16px 4px;
+      font-size: 0.62rem;
       color: var(--text-dim);
       text-transform: uppercase;
       letter-spacing: .08em;
@@ -133,30 +180,27 @@
       background: var(--bg);
       z-index: 1;
     }
-
     #history-list {
       list-style: none;
-      padding: 0 16px 16px;
+      padding: 0 16px 8px;
     }
-
     #history-list li {
       display: flex;
       align-items: baseline;
-      gap: 10px;
-      padding: 8px 0;
+      gap: 8px;
+      padding: 7px 0;
       border-bottom: 1px solid var(--border);
     }
     #history-list li:last-child { border-bottom: none; }
+    .hist-idx { font-size: 0.68rem; color: var(--text-dim); width: 16px; flex-shrink: 0; text-align: right; }
+    .hist-ean { font-family: var(--mono); font-size: 0.92rem; font-weight: 700; flex: 1; }
+    .hist-fmt { font-size: 0.65rem; color: var(--text-dim); flex-shrink: 0; }
+    .hist-ms  { font-size: 0.75rem; color: #facc15; flex-shrink: 0; min-width: 52px; text-align: right; }
 
-    .hist-idx  { font-size: 0.7rem; color: var(--text-dim); width: 18px; flex-shrink: 0; text-align: right; }
-    .hist-ean  { font-family: var(--mono); font-size: 0.95rem; font-weight: 700; flex: 1; }
-    .hist-fmt  { font-size: 0.68rem; color: var(--text-dim); flex-shrink: 0; }
-    .hist-ms   { font-size: 0.75rem; color: #facc15; flex-shrink: 0; min-width: 52px; text-align: right; }
-
-    /* ── Manual entry ── */
+    /* ── Saisie manuelle ── */
     #manual-section {
       flex-shrink: 0;
-      padding: 10px 16px;
+      padding: 8px 16px;
       background: var(--surface);
       border-top: 1px solid var(--border);
       display: flex;
@@ -169,33 +213,23 @@
       border-radius: 8px;
       color: var(--text);
       font-size: 1rem;
-      padding: 0 12px;
+      padding: 0 10px;
       height: 44px;
       font-family: var(--mono);
       -webkit-appearance: none;
     }
     #manual-submit {
       height: 44px;
-      padding: 0 16px;
+      padding: 0 14px;
       background: var(--accent);
       color: #fff;
       border: none;
       border-radius: 8px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       white-space: nowrap;
-    }
-
-    /* ── Status / errors ── */
-    #status {
-      padding: 8px 16px;
-      font-size: 0.8rem;
-      color: #fbbf24;
-      background: var(--bg);
-      flex-shrink: 0;
-      min-height: 32px;
     }
   </style>
 </head>
@@ -208,10 +242,16 @@
 
   <div id="reader-wrap">
     <div id="reader"></div>
+    <div id="pause-overlay" class="visible"><span>⏸ En pause</span></div>
     <button id="btn-torch" aria-label="Lampe torche">🔦</button>
   </div>
 
   <div id="status">Initialisation de la caméra…</div>
+
+  <!-- Bouton "produit suivant" — visible uniquement après un scan -->
+  <div id="btn-next-wrap">
+    <button id="btn-next">▶ Scanner le produit suivant</button>
+  </div>
 
   <div id="last-result" class="waiting">
     <div class="label">Dernier scan</div>
@@ -222,7 +262,7 @@
   <div id="history-section">
     <div class="history-header">Historique (10 derniers)</div>
     <ul id="history-list">
-      <li style="color:var(--text-dim);font-size:0.8rem;padding:10px 0;border:none;">Aucun scan pour le moment.</li>
+      <li style="color:var(--text-dim);font-size:0.78rem;padding:8px 0;border:none;">Aucun scan pour le moment.</li>
     </ul>
   </div>
 
@@ -232,53 +272,77 @@
     <button id="manual-submit">OK</button>
   </div>
 
-  <!-- html5-qrcode — chargement depuis CDN pour cette page de test -->
   <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script>
     'use strict';
 
-    const statusEl     = document.getElementById('status');
-    const lastResult   = document.getElementById('last-result');
-    const historyList  = document.getElementById('history-list');
-    const btnTorch     = document.getElementById('btn-torch');
-    const manualInput  = document.getElementById('manual-input');
+    const statusEl    = document.getElementById('status');
+    const lastResult  = document.getElementById('last-result');
+    const historyList = document.getElementById('history-list');
+    const btnTorch    = document.getElementById('btn-torch');
+    const btnNextWrap = document.getElementById('btn-next-wrap');
+    const btnNext     = document.getElementById('btn-next');
+    const pauseOverlay = document.getElementById('pause-overlay');
+    const manualInput = document.getElementById('manual-input');
     const manualSubmit = document.getElementById('manual-submit');
 
-    let scans       = [];    // array of {ean, format, ms}
-    let openTime    = null;  // Date.now() when camera is ready
-    let lastTime    = null;  // Date.now() of last successful scan
-    let torchOn     = false;
+    let scans        = [];
+    let timerStart   = null;   // Date.now() au moment du tap "produit suivant" (ou ouverture caméra)
+    let paused       = true;   // démarre en pause, activé dès que la caméra est prête
+    let torchOn      = false;
     let torchFeature = null;
-    let scanner     = null;
+    let scanner      = null;
 
     // ── Helpers ───────────────────────────────────────────────────────────────
 
     function formatMs(ms) {
-      return ms < 1000 ? ms + ' ms' : (ms / 1000).toFixed(1) + ' s';
+      return ms < 1000 ? ms + ' ms' : (ms / 1000).toFixed(2) + ' s';
     }
 
     function shortFormat(fmt) {
-      // html5-qrcode returns e.g. "QR_CODE", "EAN_13", "UPC_A"
-      return (fmt || '?').replace('_', '-');
+      return (fmt || '?').replace(/_/g, '-');
     }
 
+    // ── Pause / reprise ───────────────────────────────────────────────────────
+
+    function pauseScanner() {
+      if (!scanner || paused) return;
+      try {
+        scanner.pause(/* shouldPauseVideo= */ false);  // caméra reste active, scan stoppé
+      } catch (_) {}
+      paused = true;
+      pauseOverlay.classList.add('visible');
+      btnNextWrap.classList.add('visible');
+    }
+
+    function resumeScanner() {
+      if (!scanner || !paused) return;
+      try {
+        scanner.resume();
+      } catch (_) {}
+      paused      = false;
+      timerStart  = Date.now();   // ← chronomètre part ICI (au toucher du bouton)
+      pauseOverlay.classList.remove('visible');
+      btnNextWrap.classList.remove('visible');
+      statusEl.textContent = '📷 Scan en cours…';
+    }
+
+    // ── Enregistrement d'un scan ──────────────────────────────────────────────
+
     function recordScan(ean, fmt) {
-      const now  = Date.now();
-      const ref  = lastTime ?? openTime ?? now;
-      const ms   = now - ref;
-      lastTime   = now;
+      const ms = timerStart != null ? Date.now() - timerStart : 0;
 
       const entry = { ean, fmt: shortFormat(fmt), ms };
       scans.unshift(entry);
       if (scans.length > 10) scans.length = 10;
 
-      // Update last-result panel
+      // Panneau dernier scan
       lastResult.classList.remove('waiting');
       lastResult.querySelector('.ean').textContent  = ean;
       lastResult.querySelector('.meta').textContent =
-        `${entry.fmt}  ·  ${formatMs(ms)}  depuis ${lastTime === now && scans.length === 1 ? "l'ouverture" : "le scan précédent"}`;
+        `${entry.fmt}  ·  ${formatMs(ms)} depuis le tap`;
 
-      // Rebuild history
+      // Historique
       historyList.innerHTML = scans.map((s, i) => `
         <li>
           <span class="hist-idx">${i + 1}</span>
@@ -288,65 +352,72 @@
         </li>
       `).join('');
 
-      // Vibrate if available
+      statusEl.textContent = `✓ ${ean} — ${formatMs(ms)}`;
+
       if ('vibrate' in navigator) navigator.vibrate(60);
+
+      // Mise en pause automatique après chaque lecture
+      pauseScanner();
     }
 
-    // ── Scanner init ──────────────────────────────────────────────────────────
+    // ── Initialisation scanner ────────────────────────────────────────────────
 
-    function qrboxFn(vw, vh) {
-      // Wide rectangle : ~85 % de la largeur, ~30 % de la largeur en hauteur
-      const w = Math.min(Math.round(vw * 0.85), 340);
-      const h = Math.round(w * 0.32);
+    function qrboxFn(vw) {
+      const w = Math.min(Math.round(vw * 0.88), 350);
+      const h = Math.round(w * 0.3);
       return { width: w, height: h };
     }
-
-    const config = {
-      fps: 15,
-      qrbox: qrboxFn,
-      aspectRatio: 1.5,           // 3:2 — plus large que haut, adapté aux codes barres
-      formatsToSupport: [
-        Html5QrcodeSupportedFormats.EAN_13,
-        Html5QrcodeSupportedFormats.EAN_8,
-        Html5QrcodeSupportedFormats.UPC_A,
-      ],
-      rememberLastUsedCamera: false,
-      showTorchButtonIfSupported: false,   // on gère le bouton nous-mêmes
-    };
 
     scanner = new Html5Qrcode('reader', { verbose: false });
 
     scanner.start(
       { facingMode: 'environment' },
-      config,
-      // Success
+      {
+        fps: 15,
+        qrbox: qrboxFn,
+        aspectRatio: 1.5,
+        formatsToSupport: [
+          Html5QrcodeSupportedFormats.EAN_13,
+          Html5QrcodeSupportedFormats.EAN_8,
+          Html5QrcodeSupportedFormats.UPC_A,
+        ],
+        rememberLastUsedCamera: false,
+        showTorchButtonIfSupported: false,
+      },
       (decodedText, decodedResult) => {
+        if (paused) return;   // sécurité : ignorer si on est déjà en pause
         const fmt = decodedResult?.result?.format?.formatName ?? 'UNKNOWN';
         recordScan(decodedText, fmt);
-        statusEl.textContent = '✓ Scan réussi — en attente du prochain…';
       },
-      // Per-frame failure (normal — ne pas afficher)
       (_err) => {}
     ).then(() => {
-      openTime  = Date.now();
-      lastTime  = openTime;
-      statusEl.textContent = '📷 Caméra active — pointez vers un code-barres';
+      // Caméra prête — premier démarrage automatique
+      statusEl.textContent = '📷 Caméra prête — tap sur le bouton pour commencer';
+      paused = true;   // on reste en pause jusqu'au premier tap
+
+      // Afficher le bouton dès le départ
+      btnNextWrap.classList.add('visible');
+      btnNext.textContent = '▶ Démarrer le premier scan';
 
       // Torch
       try {
         const caps = scanner.getRunningTrackCameraCapabilities();
         torchFeature = caps.torchFeature();
-        if (torchFeature && torchFeature.isSupported()) {
-          btnTorch.classList.add('visible');
-        }
-      } catch (e) {
-        // Torch non supporté — silencieux
-      }
+        if (torchFeature?.isSupported()) btnTorch.classList.add('visible');
+      } catch (_) {}
     }).catch((err) => {
       statusEl.textContent = '⚠️ Erreur caméra : ' + err;
+      pauseOverlay.classList.remove('visible');
     });
 
-    // ── Torch toggle ──────────────────────────────────────────────────────────
+    // ── Bouton "produit suivant" ──────────────────────────────────────────────
+
+    btnNext.addEventListener('click', () => {
+      btnNext.textContent = '▶ Scanner le produit suivant';
+      resumeScanner();
+    });
+
+    // ── Torch ─────────────────────────────────────────────────────────────────
 
     btnTorch.addEventListener('click', async () => {
       if (!torchFeature) return;
@@ -355,7 +426,7 @@
         await torchFeature.apply(torchOn);
         btnTorch.classList.toggle('on', torchOn);
         btnTorch.textContent = torchOn ? '💡' : '🔦';
-      } catch (e) {
+      } catch (_) {
         statusEl.textContent = '⚠️ Lampe torche indisponible';
         torchOn = false;
         btnTorch.classList.remove('on');
@@ -367,8 +438,9 @@
     function submitManual() {
       const val = manualInput.value.trim().replace(/\D/g, '');
       if (!val) return;
+      // La saisie manuelle compte à partir du dernier timerStart ou de maintenant
+      if (!paused) pauseScanner();
       recordScan(val, 'MANUAL');
-      statusEl.textContent = '⌨️ Saisie manuelle enregistrée';
       manualInput.value = '';
       manualInput.blur();
     }
