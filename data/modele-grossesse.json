@@ -1,0 +1,19 @@
+[
+  {"nom":"Légumes verts frais","unite":"barquette","rayon":"Fruits et légumes","magasin":"Lidl Choisy-le-Roi","prixEstime":2},
+  {"nom":"Légumes verts surgelés","unite":"sachet","rayon":"Surgelés","magasin":"Lidl Choisy-le-Roi","prixEstime":1.5},
+  {"nom":"Lentilles","unite":"boîte","rayon":"Épicerie","magasin":"Lidl Choisy-le-Roi","prixEstime":0.8},
+  {"nom":"Pois chiches","unite":"boîte","rayon":"Épicerie","magasin":"Lidl Choisy-le-Roi","prixEstime":0.8},
+  {"nom":"Fruits de saison","unite":"kg","rayon":"Fruits et légumes","magasin":"Lidl Choisy-le-Roi","prixEstime":3},
+  {"nom":"Sardines en conserve","unite":"boîte","rayon":"Épicerie","magasin":"Lidl Choisy-le-Roi","prixEstime":1.2},
+  {"nom":"Maquereau en conserve","unite":"boîte","rayon":"Épicerie","magasin":"Lidl Choisy-le-Roi","prixEstime":1.5},
+  {"nom":"Saumon d'élevage (à cuire)","unite":"pavé","rayon":"Poissonnerie","magasin":"Lidl Choisy-le-Roi","prixEstime":4},
+  {"nom":"Poulet entier ou filets","unite":"kg","rayon":"Boucherie","magasin":"Lidl Choisy-le-Roi","prixEstime":6},
+  {"nom":"Steak haché (bien cuit)","unite":"barquette","rayon":"Boucherie","magasin":"Lidl Choisy-le-Roi","prixEstime":4},
+  {"nom":"Œufs","unite":"boîte de 6","rayon":"Crèmerie","magasin":"Lidl Choisy-le-Roi","prixEstime":1.5},
+  {"nom":"Yaourts nature pasteurisés","unite":"pack×4","rayon":"Crèmerie","magasin":"Lidl Choisy-le-Roi","prixEstime":1.2},
+  {"nom":"Emmental ou comté","unite":"sachet","rayon":"Crèmerie","magasin":"Lidl Choisy-le-Roi","prixEstime":2.5},
+  {"nom":"Pain complet","unite":"miche","rayon":"Boulangerie","magasin":"Lidl Choisy-le-Roi","prixEstime":1.5},
+  {"nom":"Flocons d'avoine","unite":"kg","rayon":"Épicerie","magasin":"Lidl Choisy-le-Roi","prixEstime":1.3},
+  {"nom":"Huile de colza","unite":"bouteille","rayon":"Épicerie","magasin":"Lidl Choisy-le-Roi","prixEstime":3},
+  {"nom":"Eau","unite":"pack 6×1,5 L","rayon":"Boissons","magasin":"Lidl Choisy-le-Roi","prixEstime":1.8}
+]

@@ -1,0 +1,1059 @@
+[
+  {
+    "id": "fromage-lait-cru",
+    "type": "article",
+    "motsCles": [
+      "fromage au lait cru",
+      "lait cru",
+      "camembert au lait cru",
+      "brie au lait cru",
+      "roquefort",
+      "mont d'or",
+      "reblochon au lait cru"
+    ],
+    "niveau": "eviter",
+    "raison": "Les fromages au lait cru peuvent contenir Listeria monocytogenes, dangereuse pour le fœtus. Possible uniquement s'il est cuit au four au cœur d'un plat (gratin, quiche).",
+    "alternative": "Fromages au lait pasteurisé, fromages à pâte dure (emmental, comté, gruyère).",
+    "source": "https://www.sante.fr/listeriose-pendant-la-grossesse-quels-aliments-eviter",
+    "risque": "listériose"
+  },
+  {
+    "id": "croute-fromage",
+    "type": "article",
+    "motsCles": [
+      "croute de fromage",
+      "croûte de fromage",
+      "croûte fromage",
+      "croute fromage"
+    ],
+    "niveau": "eviter",
+    "raison": "La croûte des fromages peut héberger Listeria même sur fromage pasteurisé.",
+    "alternative": "Retirer systématiquement la croûte avant de manger.",
+    "source": "https://www.sante.fr/listeriose-pendant-la-grossesse-quels-aliments-eviter",
+    "risque": "listériose"
+  },
+  {
+    "id": "charcuterie-artisanale",
+    "type": "article",
+    "motsCles": [
+      "charcuterie artisanale",
+      "charcuterie à la coupe",
+      "charcuterie a la coupe",
+      "charcuterie coupe",
+      "saucisson",
+      "chorizo",
+      "salami",
+      "pepperoni",
+      "mortadelle"
+    ],
+    "niveau": "eviter",
+    "raison": "La charcuterie artisanale ou à la coupe présente un risque accru de Listeria et Toxoplasma.",
+    "alternative": "Charcuterie préemballée industrielle, jambon blanc sous vide.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "listériose"
+  },
+  {
+    "id": "rillettes",
+    "type": "article",
+    "motsCles": [
+      "rillettes",
+      "rillette"
+    ],
+    "niveau": "eviter",
+    "raison": "Les rillettes sont un milieu propice au développement de Listeria.",
+    "alternative": "Éviter pendant la grossesse.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "listériose"
+  },
+  {
+    "id": "pates-artisanaux",
+    "type": "article",
+    "motsCles": [
+      "pâté",
+      "pate",
+      "terrine",
+      "foie gras mi-cuit"
+    ],
+    "niveau": "eviter",
+    "raison": "Les pâtés et terrines artisanaux peuvent contenir Listeria.",
+    "alternative": "Pâtés en conserve stérilisés (bocaux sous vide longue conservation).",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "listériose"
+  },
+  {
+    "id": "saumon-fume",
+    "type": "article",
+    "motsCles": [
+      "saumon fume",
+      "saumon fumé",
+      "truite fumee",
+      "truite fumée",
+      "poisson fume",
+      "poisson fumé"
+    ],
+    "niveau": "eviter",
+    "raison": "Le saumon fumé peut contenir Listeria monocytogenes qui résiste au fumage.",
+    "alternative": "Saumon bien cuit à cœur.",
+    "source": "https://www.sante.fr/listeriose-pendant-la-grossesse-quels-aliments-eviter",
+    "risque": "listériose"
+  },
+  {
+    "id": "crevettes-cuites-decortiquees",
+    "type": "article",
+    "motsCles": [
+      "crevettes cuites",
+      "crevettes decortiquees",
+      "crevettes décortiquées",
+      "gambas cuites"
+    ],
+    "niveau": "surveiller",
+    "raison": "Risque de listériose après cuisson industrielle : à recuire avant de manger, ou à éviter.",
+    "source": "https://www.sante.fr/listeriose-pendant-la-grossesse-quels-aliments-eviter",
+    "risque": "listériose"
+  },
+  {
+    "id": "poisson-cru",
+    "type": "article",
+    "motsCles": [
+      "poisson cru",
+      "ceviche",
+      "cébiche",
+      "carpaccio de poisson"
+    ],
+    "niveau": "eviter",
+    "raison": "Le poisson cru peut contenir des parasites (Anisakis) et des bactéries pathogènes.",
+    "alternative": "Poisson bien cuit à cœur (63 °C).",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "listériose"
+  },
+  {
+    "id": "sushi",
+    "type": "article",
+    "motsCles": [
+      "sushi",
+      "sashimi",
+      "maki"
+    ],
+    "niveau": "eviter",
+    "raison": "Les sushis contiennent du poisson cru, risque de Listeria et parasites.",
+    "alternative": "Sushis avec poisson cuit (crevette cuite, surimi) ou sushis végétariens.",
+    "source": "https://www.sante.fr/listeriose-pendant-la-grossesse-quels-aliments-eviter",
+    "risque": "listériose"
+  },
+  {
+    "id": "tarama",
+    "type": "article",
+    "motsCles": [
+      "tarama",
+      "taramosalata",
+      "œufs de poisson"
+    ],
+    "niveau": "eviter",
+    "raison": "Le tarama contient des œufs de poisson crus, risque de Listeria.",
+    "alternative": "Éviter pendant la grossesse.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "listériose"
+  },
+  {
+    "id": "coquillages-crus",
+    "type": "article",
+    "motsCles": [
+      "coquillages crus",
+      "huîtres",
+      "huitres",
+      "moules crues",
+      "fruits de mer crus"
+    ],
+    "niveau": "eviter",
+    "raison": "Les coquillages crus peuvent contenir des bactéries et virus (hépatite A, norovirus).",
+    "alternative": "Coquillages bien cuits.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "listériose"
+  },
+  {
+    "id": "viande-crue",
+    "type": "article",
+    "motsCles": [
+      "viande crue",
+      "viande saignante",
+      "viande bleue"
+    ],
+    "niveau": "eviter",
+    "raison": "La viande crue ou insuffisamment cuite peut transmettre la toxoplasmose et des bactéries.",
+    "alternative": "Viande bien cuite à cœur (71 °C).",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "toxoplasmose"
+  },
+  {
+    "id": "tartare",
+    "type": "article",
+    "motsCles": [
+      "tartare",
+      "tartare de boeuf",
+      "tartare de bœuf",
+      "tartare de saumon"
+    ],
+    "niveau": "eviter",
+    "raison": "Le tartare est de la viande ou du poisson cru, risque de toxoplasmose et Listeria.",
+    "alternative": "Viande ou poisson bien cuit.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "toxoplasmose"
+  },
+  {
+    "id": "carpaccio",
+    "type": "article",
+    "motsCles": [
+      "carpaccio",
+      "carpaccio de boeuf",
+      "carpaccio de bœuf"
+    ],
+    "niveau": "eviter",
+    "raison": "Le carpaccio est de la viande crue, risque de toxoplasmose et Listeria.",
+    "alternative": "Viande bien cuite.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "toxoplasmose"
+  },
+  {
+    "id": "oeufs-crus",
+    "type": "article",
+    "motsCles": [
+      "oeuf cru",
+      "œuf cru",
+      "oeufs crus",
+      "œufs crus"
+    ],
+    "niveau": "eviter",
+    "raison": "Les œufs crus ou peu cuits présentent un risque de salmonellose.",
+    "alternative": "Œufs bien cuits (durs, en omelette bien cuite).",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "salmonellose"
+  },
+  {
+    "id": "mayonnaise-maison",
+    "type": "article",
+    "motsCles": [
+      "mayonnaise maison",
+      "mayo maison"
+    ],
+    "niveau": "eviter",
+    "raison": "La mayonnaise maison contient des œufs crus, risque de salmonellose.",
+    "alternative": "Mayonnaise industrielle (œufs pasteurisés).",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "salmonellose"
+  },
+  {
+    "id": "tiramisu-maison",
+    "type": "article",
+    "motsCles": [
+      "tiramisu maison",
+      "mousse au chocolat maison",
+      "mousse maison"
+    ],
+    "niveau": "eviter",
+    "raison": "Le tiramisu et les mousses maison contiennent des œufs crus.",
+    "alternative": "Desserts industriels (œufs pasteurisés) ou desserts cuits.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "salmonellose"
+  },
+  {
+    "id": "graines-germees",
+    "type": "article",
+    "motsCles": [
+      "graines germees",
+      "graines germées",
+      "graines germees crues",
+      "pousse de soja crue"
+    ],
+    "niveau": "eviter",
+    "raison": "Les graines germées crues peuvent contenir E. coli et Salmonella.",
+    "alternative": "Graines germées bien cuites.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "salmonellose"
+  },
+  {
+    "id": "alcool",
+    "type": "article",
+    "motsCles": [
+      "alcool",
+      "vin",
+      "biere",
+      "bière",
+      "champagne",
+      "cocktail",
+      "spiritueux",
+      "apéritif alcoolisé"
+    ],
+    "niveau": "eviter",
+    "raison": "L'alcool traverse le placenta et peut provoquer le syndrome d'alcoolisation fœtale. Aucune dose sûre.",
+    "alternative": "Boissons sans alcool, mocktails, eau pétillante.",
+    "source": "https://www.santepubliquefrance.fr/determinants-de-sante/alcool/articles/zero-alcool-pendant-la-grossesse",
+    "risque": "syndrome d'alcoolisation fœtale"
+  },
+  {
+    "id": "jambon-cru",
+    "type": "article",
+    "motsCles": [
+      "jambon cru",
+      "jambon sec",
+      "prosciutto",
+      "prosciutto cru",
+      "speck",
+      "bresaola",
+      "coppa",
+      "viande des grisons"
+    ],
+    "niveau": "eviter",
+    "raison": "Les charcuteries crues ou séchées peuvent contenir Toxoplasma et Listeria.",
+    "alternative": "Jambon blanc cuit préemballé.",
+    "source": "https://www.sante.fr/listeriose-pendant-la-grossesse-quels-aliments-eviter",
+    "risque": "toxoplasmose"
+  },
+  {
+    "id": "lardons-crus",
+    "type": "article",
+    "motsCles": [
+      "lardons crus",
+      "lardon cru",
+      "lardons non cuits"
+    ],
+    "niveau": "eviter",
+    "raison": "Les lardons crus présentent un risque de toxoplasmose et listériose.",
+    "alternative": "Lardons bien cuits à la poêle avant consommation.",
+    "source": "https://www.sante.fr/listeriose-pendant-la-grossesse-quels-aliments-eviter",
+    "risque": "toxoplasmose"
+  },
+  {
+    "id": "camembert",
+    "type": "article",
+    "motsCles": [
+      "camembert",
+      "camembert pasteurise",
+      "camembert pasteurisé"
+    ],
+    "niveau": "surveiller",
+    "raison": "Fromage à pâte molle : même pasteurisé, sa texture humide peut favoriser Listeria. Retirer la croûte.",
+    "alternative": "Consommer rapidement après ouverture, retirer la croûte, ou préférer les pâtes dures.",
+    "source": "https://www.sante.fr/listeriose-pendant-la-grossesse-quels-aliments-eviter",
+    "risque": "listériose"
+  },
+  {
+    "id": "brie",
+    "type": "article",
+    "motsCles": [
+      "brie",
+      "brie pasteurise",
+      "brie pasteurisé",
+      "coulommiers"
+    ],
+    "niveau": "surveiller",
+    "raison": "Fromage à pâte molle : même pasteurisé, risque de Listeria en surface.",
+    "alternative": "Retirer la croûte, consommer rapidement. Préférer les pâtes pressées cuites.",
+    "source": "https://www.sante.fr/listeriose-pendant-la-grossesse-quels-aliments-eviter",
+    "risque": "listériose"
+  },
+  {
+    "id": "fromage-rape-sachet",
+    "type": "article",
+    "motsCles": [
+      "fromage rape",
+      "fromage râpé",
+      "fromage rape sachet",
+      "fromage râpé sachet",
+      "emmental rape"
+    ],
+    "niveau": "eviter",
+    "raison": "Le râpé industriel est déconseillé (listériose). Râper soi-même un fromage à pâte cuite est possible.",
+    "alternative": "Râper soi-même du fromage à pâte dure, ou cuire le fromage râpé (gratin).",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "listériose"
+  },
+  {
+    "id": "espadon",
+    "type": "article",
+    "motsCles": [
+      "espadon"
+    ],
+    "niveau": "eviter",
+    "raison": "Grand prédateur : accumule du méthylmercure, neurotoxique pour le fœtus. À éviter pendant toute la grossesse.",
+    "alternative": "Sardines, maquereaux, saumon d'élevage (petits poissons à faible teneur en mercure).",
+    "source": "https://www.sante.fr/decryptage/nos-reponses/les-femmes-enceintes-doivent-elles-eviter-de-manger-du-poisson",
+    "risque": "mercure"
+  },
+  {
+    "id": "requin",
+    "type": "article",
+    "motsCles": [
+      "requin",
+      "roussette"
+    ],
+    "niveau": "eviter",
+    "raison": "Grand prédateur : accumule du méthylmercure, neurotoxique pour le fœtus. À éviter pendant toute la grossesse.",
+    "alternative": "Petits poissons : sardines, maquereaux.",
+    "source": "https://www.sante.fr/decryptage/nos-reponses/les-femmes-enceintes-doivent-elles-eviter-de-manger-du-poisson",
+    "risque": "mercure"
+  },
+  {
+    "id": "marlin",
+    "type": "article",
+    "motsCles": [
+      "marlin",
+      "makaire"
+    ],
+    "niveau": "eviter",
+    "raison": "Grand prédateur : accumule du méthylmercure, neurotoxique pour le fœtus. À éviter pendant toute la grossesse.",
+    "alternative": "Sardines, maquereaux, saumon d’élevage bien cuit.",
+    "source": "https://www.sante.fr/decryptage/nos-reponses/les-femmes-enceintes-doivent-elles-eviter-de-manger-du-poisson",
+    "risque": "mercure"
+  },
+  {
+    "id": "siki",
+    "type": "article",
+    "motsCles": [
+      "siki",
+      "requin siki",
+      "squale"
+    ],
+    "niveau": "eviter",
+    "raison": "Grand prédateur : accumule du méthylmercure, neurotoxique pour le fœtus. À éviter pendant toute la grossesse.",
+    "alternative": "Petits poissons gras : sardines, maquereaux.",
+    "source": "https://www.sante.fr/decryptage/nos-reponses/les-femmes-enceintes-doivent-elles-eviter-de-manger-du-poisson",
+    "risque": "mercure"
+  },
+  {
+    "id": "lamproie",
+    "type": "article",
+    "motsCles": [
+      "lamproie"
+    ],
+    "niveau": "eviter",
+    "raison": "Grand prédateur : accumule du méthylmercure, neurotoxique pour le fœtus. À éviter pendant toute la grossesse.",
+    "alternative": "Petits poissons gras : sardines, maquereaux.",
+    "source": "https://www.sante.fr/decryptage/nos-reponses/les-femmes-enceintes-doivent-elles-eviter-de-manger-du-poisson",
+    "risque": "mercure"
+  },
+  {
+    "id": "foie-de-morue",
+    "type": "article",
+    "motsCles": [
+      "foie de morue",
+      "huile de foie de morue"
+    ],
+    "niveau": "eviter",
+    "raison": "Déconseillé par l'Anses pendant la grossesse.",
+    "alternative": "Oméga-3 via sardines ou maquereau en conserve.",
+    "source": "https://www.sante.fr/decryptage/nos-reponses/les-femmes-enceintes-doivent-elles-eviter-de-manger-du-poisson",
+    "risque": "mercure"
+  },
+  {
+    "id": "thon-frais",
+    "type": "article",
+    "motsCles": [
+      "thon frais",
+      "thon rouge",
+      "steak de thon"
+    ],
+    "niveau": "surveiller",
+    "raison": "Poisson prédateur : 150 g par semaine au maximum, tous poissons prédateurs cumulés.",
+    "alternative": "Thon en conserve au naturel (limiter aussi), sardines.",
+    "source": "https://www.sante.fr/decryptage/nos-reponses/les-femmes-enceintes-doivent-elles-eviter-de-manger-du-poisson",
+    "risque": "mercure"
+  },
+  {
+    "id": "cafe",
+    "type": "article",
+    "motsCles": [
+      "cafe",
+      "café",
+      "expresso",
+      "espresso"
+    ],
+    "niveau": "surveiller",
+    "raison": "Excitant : 3 tasses par jour au maximum (café et thé cumulés).",
+    "alternative": "Décaféiné, infusions sans caféine, chicorée.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "excès de caféine"
+  },
+  {
+    "id": "the-fort",
+    "type": "article",
+    "motsCles": [
+      "the fort",
+      "thé fort",
+      "the vert",
+      "thé vert",
+      "the noir",
+      "thé noir",
+      "matcha"
+    ],
+    "niveau": "surveiller",
+    "raison": "Excitant : 3 tasses par jour au maximum (café et thé cumulés).",
+    "alternative": "Infusions (rooibos, verveine), thé léger loin des repas.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "excès de caféine"
+  },
+  {
+    "id": "boisson-energisante",
+    "type": "article",
+    "motsCles": [
+      "boisson energisante",
+      "boisson énergisante",
+      "energy drink",
+      "red bull",
+      "monster"
+    ],
+    "niveau": "eviter",
+    "raison": "Très riches en caféine : déconseillées par l'Anses pendant la grossesse.",
+    "alternative": "Eau, jus de fruits frais dilué.",
+    "source": "https://www.anses.fr/fr/document/boissons-energisantes",
+    "risque": "excès de caféine",
+    "source2": "https://www.sante.fr/grossesse-quels-aliments-sont-autorises"
+  },
+  {
+    "id": "soja",
+    "type": "article",
+    "motsCles": [
+      "soja",
+      "tofu",
+      "tempeh",
+      "lait de soja",
+      "yaourt au soja",
+      "edamame"
+    ],
+    "motsClesExclus": [
+      "sauce soja"
+    ],
+    "niveau": "surveiller",
+    "raison": "Contient des phytoœstrogènes : de préférence s'abstenir, sinon 1 fois par jour au maximum en petite quantité. À voir avec ta sage-femme.",
+    "source": "https://www.sante.fr/node/7070507",
+    "risque": "phytoœstrogènes",
+    "source2": "https://www.sante.fr/grossesse-quels-aliments-sont-autorises"
+  },
+  {
+    "id": "foie",
+    "type": "article",
+    "motsCles": [
+      "foie",
+      "foie de veau",
+      "foie de volaille",
+      "foie de poulet",
+      "foie de boeuf",
+      "foie de bœuf"
+    ],
+    "niveau": "surveiller",
+    "raison": "Très riche en vitamine A : seulement de manière exceptionnelle.",
+    "alternative": "Autres viandes maigres pour le fer.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "excès de vitamine A"
+  },
+  {
+    "id": "produit-au-foie",
+    "type": "article",
+    "motsCles": [
+      "produit au foie",
+      "mousse de foie",
+      "foie gras"
+    ],
+    "niveau": "eviter",
+    "raison": "Classé avec la charcuterie interdite pendant la grossesse.",
+    "alternative": "Limiter fortement, préférer les versions bien cuites et en petite quantité.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "excès de vitamine A"
+  },
+  {
+    "id": "fruits-crus",
+    "type": "article",
+    "motsCles": [
+      "fruit cru",
+      "fruits crus",
+      "pomme",
+      "poire",
+      "fraise",
+      "framboise",
+      "cerise",
+      "raisin",
+      "peche",
+      "pêche",
+      "abricot",
+      "mangue",
+      "kiwi",
+      "banane",
+      "orange",
+      "clémentine",
+      "clementine",
+      "mandarine"
+    ],
+    "niveau": "surveiller",
+    "toxoDependent": true,
+    "raison": "Les fruits crus peuvent porter le parasite Toxoplasma gondii si mal lavés.",
+    "alternative": "Laver soigneusement sous l'eau courante, éplucher si possible. Si immunisée contre la toxoplasmose : pas de restriction.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "toxoplasmose"
+  },
+  {
+    "id": "legumes-crus",
+    "type": "article",
+    "motsCles": [
+      "legume cru",
+      "légume cru",
+      "legumes crus",
+      "légumes crus",
+      "carotte crue",
+      "concombre",
+      "radis"
+    ],
+    "niveau": "surveiller",
+    "toxoDependent": true,
+    "raison": "Les légumes crus peuvent porter le parasite Toxoplasma gondii si mal lavés.",
+    "alternative": "Laver très soigneusement, éplucher. Cuire si doute. Si immunisée : pas de restriction.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "toxoplasmose"
+  },
+  {
+    "id": "crudites",
+    "type": "article",
+    "motsCles": [
+      "crudite",
+      "crudité",
+      "crudites",
+      "crudités"
+    ],
+    "niveau": "surveiller",
+    "toxoDependent": true,
+    "raison": "Les crudités peuvent porter Toxoplasma si mal lavées, surtout hors de la maison.",
+    "alternative": "Laver et éplucher soi-même. Éviter les buffets de crudités. Si immunisée : pas de restriction.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "toxoplasmose"
+  },
+  {
+    "id": "salade",
+    "type": "article",
+    "motsCles": [
+      "salade",
+      "salade verte",
+      "laitue",
+      "mache",
+      "mâche",
+      "roquette",
+      "mesclun",
+      "salade en sachet"
+    ],
+    "niveau": "surveiller",
+    "toxoDependent": true,
+    "raison": "La salade en sachet ou mal lavée peut contenir Toxoplasma. Bien laver feuille par feuille.",
+    "alternative": "Laver soigneusement. Préférer les salades entières à laver soi-même. Si immunisée : pas de restriction.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "toxoplasmose"
+  },
+  {
+    "id": "tomates",
+    "type": "article",
+    "motsCles": [
+      "tomate",
+      "tomates",
+      "tomates cerises",
+      "tomate cerise"
+    ],
+    "niveau": "surveiller",
+    "toxoDependent": true,
+    "raison": "Les tomates crues doivent être bien lavées pour éliminer le risque de toxoplasmose.",
+    "alternative": "Laver soigneusement. Si immunisée contre la toxoplasmose : aucune restriction.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "toxoplasmose"
+  },
+  {
+    "id": "steak-hache",
+    "type": "article",
+    "motsCles": [
+      "steak hache",
+      "steak haché",
+      "hamburger",
+      "boeuf hache",
+      "bœuf haché"
+    ],
+    "niveau": "surveiller",
+    "raison": "Le steak haché doit être cuit à cœur (bien cuit, pas saignant). Le hachage répartit les bactéries en profondeur.",
+    "alternative": "Toujours cuire à cœur (71 °C). Ne jamais manger saignant.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "toxoplasmose"
+  },
+  {
+    "id": "saumon",
+    "type": "article",
+    "motsCles": [
+      "saumon",
+      "pave de saumon",
+      "pavé de saumon",
+      "filet de saumon",
+      "saumon d'elevage"
+    ],
+    "niveau": "surveiller",
+    "raison": "Le saumon doit être bien cuit à cœur. Ne pas consommer cru ou mi-cuit.",
+    "alternative": "Cuire le saumon à cœur (63 °C). Éviter le saumon fumé, cru ou mi-cuit.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": "listériose"
+  },
+  {
+    "id": "thon-germon",
+    "type": "article",
+    "motsCles": [
+      "thon germon",
+      "thon blanc",
+      "thon albacore"
+    ],
+    "niveau": "surveiller",
+    "raison": "Poisson prédateur : 150 g par semaine au maximum, tous poissons prédateurs cumulés.",
+    "alternative": "Alterner avec sardines, maquereaux et autres petits poissons.",
+    "source": "https://www.sante.fr/decryptage/nos-reponses/les-femmes-enceintes-doivent-elles-eviter-de-manger-du-poisson",
+    "risque": "mercure"
+  },
+  {
+    "id": "legumes-cuits",
+    "type": "article",
+    "motsCles": [
+      "legume cuit",
+      "légume cuit",
+      "legumes cuits",
+      "légumes cuits",
+      "haricots verts cuits",
+      "brocoli cuit",
+      "courgette cuite",
+      "epinards cuits",
+      "épinards cuits"
+    ],
+    "niveau": "ok",
+    "raison": "Les légumes bien cuits sont sûrs et recommandés pendant la grossesse.",
+    "alternative": "",
+    "source": "https://www.mangerbouger.fr/manger-mieux/a-tout-age-et-a-chaque-etape-de-la-vie/les-recommandations-et-conseils-avant-pendant-et-apres-la-grossesse",
+    "risque": ""
+  },
+  {
+    "id": "legumes-surgeles-cuits",
+    "type": "article",
+    "motsCles": [
+      "legumes surgeles",
+      "légumes surgelés",
+      "legumes surgeles cuits",
+      "légumes surgelés cuits",
+      "surgeles cuits"
+    ],
+    "niveau": "ok",
+    "raison": "Les légumes surgelés bien cuits sont sûrs et pratiques.",
+    "alternative": "",
+    "source": "https://www.mangerbouger.fr/manger-mieux/a-tout-age-et-a-chaque-etape-de-la-vie/les-recommandations-et-conseils-avant-pendant-et-apres-la-grossesse",
+    "risque": ""
+  },
+  {
+    "id": "legumineuses",
+    "type": "article",
+    "motsCles": [
+      "legumineuses",
+      "légumineuses",
+      "lentilles",
+      "pois chiches",
+      "haricots rouges",
+      "haricots blancs",
+      "haricots secs",
+      "feves",
+      "fèves"
+    ],
+    "niveau": "ok",
+    "raison": "Excellente source de protéines végétales, fer et folates. Recommandées pendant la grossesse.",
+    "alternative": "",
+    "source": "https://www.mangerbouger.fr/manger-mieux/a-tout-age-et-a-chaque-etape-de-la-vie/les-recommandations-et-conseils-avant-pendant-et-apres-la-grossesse",
+    "risque": ""
+  },
+  {
+    "id": "sardines-conserve",
+    "type": "article",
+    "motsCles": [
+      "sardines en conserve",
+      "sardine en conserve",
+      "sardines en boite",
+      "sardines en boîte"
+    ],
+    "niveau": "ok",
+    "raison": "Les sardines en conserve sont sûres (stérilisées), riches en oméga-3 et calcium.",
+    "alternative": "",
+    "source": "https://www.sante.fr/decryptage/nos-reponses/les-femmes-enceintes-doivent-elles-eviter-de-manger-du-poisson",
+    "risque": ""
+  },
+  {
+    "id": "maquereau-conserve",
+    "type": "article",
+    "motsCles": [
+      "maquereau en conserve",
+      "maquereau en boite",
+      "maquereau en boîte"
+    ],
+    "niveau": "ok",
+    "raison": "Le maquereau en conserve est sûr et riche en oméga-3.",
+    "alternative": "",
+    "source": "https://www.sante.fr/decryptage/nos-reponses/les-femmes-enceintes-doivent-elles-eviter-de-manger-du-poisson",
+    "risque": ""
+  },
+  {
+    "id": "thon-conserve",
+    "type": "article",
+    "motsCles": [
+      "thon en conserve",
+      "thon en boite",
+      "thon en boîte",
+      "thon au naturel"
+    ],
+    "niveau": "surveiller",
+    "raison": "Poisson prédateur : 150 g par semaine au maximum, tous poissons prédateurs cumulés.",
+    "alternative": "",
+    "source": "https://www.sante.fr/decryptage/nos-reponses/les-femmes-enceintes-doivent-elles-eviter-de-manger-du-poisson",
+    "risque": ""
+  },
+  {
+    "id": "viande-bien-cuite",
+    "type": "article",
+    "motsCles": [
+      "viande bien cuite",
+      "viande cuite",
+      "boeuf cuit",
+      "bœuf cuit"
+    ],
+    "niveau": "ok",
+    "raison": "La viande bien cuite à cœur (71 °C) est sûre.",
+    "alternative": "",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": ""
+  },
+  {
+    "id": "poulet-cuit",
+    "type": "article",
+    "motsCles": [
+      "poulet cuit",
+      "poulet bien cuit",
+      "poulet roti",
+      "poulet rôti",
+      "dinde cuite"
+    ],
+    "niveau": "ok",
+    "raison": "La volaille bien cuite est sûre. Toujours cuire à cœur.",
+    "alternative": "",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": ""
+  },
+  {
+    "id": "oeufs-durs",
+    "type": "article",
+    "motsCles": [
+      "oeuf dur",
+      "œuf dur",
+      "oeufs durs",
+      "œufs durs",
+      "oeufs cuits",
+      "œufs cuits",
+      "omelette"
+    ],
+    "niveau": "ok",
+    "raison": "Les œufs bien cuits (durs, omelette) sont sûrs et riches en protéines.",
+    "alternative": "",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "risque": ""
+  },
+  {
+    "id": "jambon-blanc",
+    "type": "article",
+    "motsCles": [
+      "jambon blanc",
+      "jambon cuit",
+      "jambon cuit preemballe",
+      "jambon cuit préemballé"
+    ],
+    "niveau": "ok",
+    "raison": "Le jambon blanc cuit préemballé sous vide est sûr. Consommer avant la DLC.",
+    "alternative": "",
+    "source": "https://www.mangerbouger.fr/manger-mieux/a-tout-age-et-a-chaque-etape-de-la-vie/les-recommandations-et-conseils-avant-pendant-et-apres-la-grossesse",
+    "risque": ""
+  },
+  {
+    "id": "lait-pasteurise",
+    "type": "article",
+    "motsCles": [
+      "lait pasteurise",
+      "lait pasteurisé",
+      "lait uht",
+      "lait sterilise",
+      "lait stérilisé"
+    ],
+    "niveau": "ok",
+    "raison": "Le lait pasteurisé ou UHT est sûr.",
+    "alternative": "",
+    "source": "https://www.mangerbouger.fr/manger-mieux/a-tout-age-et-a-chaque-etape-de-la-vie/les-recommandations-et-conseils-avant-pendant-et-apres-la-grossesse",
+    "risque": ""
+  },
+  {
+    "id": "yaourt-pasteurise",
+    "type": "article",
+    "motsCles": [
+      "yaourt pasteurise",
+      "yaourt pasteurisé",
+      "yaourt",
+      "yogourt",
+      "fromage blanc"
+    ],
+    "niveau": "ok",
+    "raison": "Les yaourts au lait pasteurisé sont sûrs et recommandés pour le calcium.",
+    "alternative": "",
+    "source": "https://www.mangerbouger.fr/manger-mieux/a-tout-age-et-a-chaque-etape-de-la-vie/les-recommandations-et-conseils-avant-pendant-et-apres-la-grossesse",
+    "risque": ""
+  },
+  {
+    "id": "emmental",
+    "type": "article",
+    "motsCles": [
+      "emmental",
+      "comte",
+      "comté",
+      "gruyere",
+      "gruyère",
+      "beaufort",
+      "parmesan",
+      "parmigiano"
+    ],
+    "niveau": "ok",
+    "raison": "Pâte pressée cuite : possible même au lait cru, en retirant la croûte.",
+    "alternative": "",
+    "source": "https://www.mangerbouger.fr/manger-mieux/a-tout-age-et-a-chaque-etape-de-la-vie/les-recommandations-et-conseils-avant-pendant-et-apres-la-grossesse",
+    "risque": ""
+  },
+  {
+    "id": "pain",
+    "type": "article",
+    "motsCles": [
+      "pain",
+      "pain complet",
+      "pain de mie",
+      "baguette",
+      "pain aux cereales",
+      "pain aux céréales"
+    ],
+    "niveau": "ok",
+    "raison": "Le pain est sûr. Préférer les pains complets pour les fibres et le fer.",
+    "alternative": "",
+    "source": "https://www.mangerbouger.fr/manger-mieux/a-tout-age-et-a-chaque-etape-de-la-vie/les-recommandations-et-conseils-avant-pendant-et-apres-la-grossesse",
+    "risque": ""
+  },
+  {
+    "id": "riz-pates",
+    "type": "article",
+    "motsCles": [
+      "riz",
+      "pates",
+      "pâtes",
+      "semoule",
+      "quinoa",
+      "boulgour"
+    ],
+    "niveau": "ok",
+    "raison": "Les féculents cuits sont sûrs et constituent la base énergétique.",
+    "alternative": "",
+    "source": "https://www.mangerbouger.fr/manger-mieux/a-tout-age-et-a-chaque-etape-de-la-vie/les-recommandations-et-conseils-avant-pendant-et-apres-la-grossesse",
+    "risque": ""
+  },
+  {
+    "id": "flocons-avoine",
+    "type": "article",
+    "motsCles": [
+      "flocons d'avoine",
+      "flocons avoine",
+      "porridge",
+      "muesli"
+    ],
+    "niveau": "ok",
+    "raison": "Les flocons d'avoine sont sûrs, riches en fibres et en fer.",
+    "alternative": "",
+    "source": "https://www.mangerbouger.fr/manger-mieux/a-tout-age-et-a-chaque-etape-de-la-vie/les-recommandations-et-conseils-avant-pendant-et-apres-la-grossesse",
+    "risque": ""
+  },
+  {
+    "id": "eau",
+    "type": "article",
+    "motsCles": [
+      "eau",
+      "eau minerale",
+      "eau minérale",
+      "eau du robinet",
+      "eau de source"
+    ],
+    "niveau": "ok",
+    "raison": "L'eau est indispensable. Boire 1,5 à 2 L par jour minimum pendant la grossesse.",
+    "alternative": "",
+    "source": "https://www.mangerbouger.fr/manger-mieux/a-tout-age-et-a-chaque-etape-de-la-vie/les-recommandations-et-conseils-avant-pendant-et-apres-la-grossesse",
+    "risque": ""
+  },
+  {
+    "id": "compote",
+    "type": "article",
+    "motsCles": [
+      "compote",
+      "compotes",
+      "compote de pomme",
+      "fruits cuits"
+    ],
+    "niveau": "ok",
+    "raison": "Les compotes et fruits cuits sont sûrs.",
+    "alternative": "",
+    "source": "https://www.mangerbouger.fr/manger-mieux/a-tout-age-et-a-chaque-etape-de-la-vie/les-recommandations-et-conseils-avant-pendant-et-apres-la-grossesse",
+    "risque": ""
+  },
+  {
+    "id": "huile-colza",
+    "type": "article",
+    "motsCles": [
+      "huile de colza",
+      "huile colza",
+      "huile d'olive",
+      "huile olive"
+    ],
+    "niveau": "ok",
+    "raison": "Les huiles végétales sont sûres et recommandées. L'huile de colza est riche en oméga-3.",
+    "alternative": "",
+    "source": "https://www.mangerbouger.fr/manger-mieux/a-tout-age-et-a-chaque-etape-de-la-vie/les-recommandations-et-conseils-avant-pendant-et-apres-la-grossesse",
+    "risque": ""
+  },
+  {
+    "id": "fiche-listeriose",
+    "type": "fiche",
+    "titre": "Listériose",
+    "contenu": "La listériose est une infection causée par la bactérie Listeria monocytogenes. Elle est rare mais grave pendant la grossesse : elle peut provoquer une fausse couche, un accouchement prématuré ou une infection néonatale.\n\n**Aliments à risque :**\n- Fromages au lait cru et à pâte molle\n- Charcuterie artisanale et à la coupe\n- Rillettes, pâtés\n- Poisson fumé (saumon fumé, truite fumée)\n- Coquillages et poisson crus\n- Graines germées crues\n\n**Prévention :**\n- Cuire les aliments à cœur (> 70 °C)\n- Bien laver les fruits et légumes\n- Respecter la chaîne du froid (frigo < 4 °C)\n- Consommer rapidement après ouverture\n- Nettoyer régulièrement le réfrigérateur\n- Séparer les aliments crus et cuits\n\n**Symptômes :** fièvre, maux de tête, courbatures (pseudo-grippal). Consulter en urgence si fièvre inexpliquée.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "avertissement": "En cas de doute, demande à ta sage-femme ou ton médecin."
+  },
+  {
+    "id": "fiche-toxoplasmose",
+    "type": "fiche",
+    "titre": "Toxoplasmose",
+    "contenu": "La toxoplasmose est une infection causée par le parasite Toxoplasma gondii. Si tu n'es pas immunisée, elle peut provoquer des malformations fœtales.\n\n**Statut sérologique :**\n- Immunisée (IgG+) : tu as déjà eu la toxoplasmose → pas de restriction sur les crudités.\n- Non immunisée (IgG−) : des précautions alimentaires s'imposent et une sérologie mensuelle est prescrite.\n\n**Aliments à risque (si non immunisée) :**\n- Viande crue, saignante ou insuffisamment cuite\n- Fruits et légumes crus mal lavés\n- Crudités préparées hors du domicile\n\n**Prévention (si non immunisée) :**\n- Cuire la viande à cœur (> 68 °C)\n- Laver soigneusement les fruits et légumes sous l'eau courante\n- Éplucher les fruits et légumes quand c'est possible\n- Porter des gants pour jardiner ou changer la litière du chat\n- Se laver les mains après avoir manipulé de la terre, de la viande crue\n- Congeler la viande 3 jours à −18 °C peut tuer le parasite\n\n**Symptômes :** souvent asymptomatique, parfois fièvre et fatigue légère.",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "avertissement": "En cas de doute, demande à ta sage-femme ou ton médecin."
+  },
+  {
+    "id": "fiche-salmonellose",
+    "type": "fiche",
+    "titre": "Salmonellose",
+    "contenu": "La salmonellose est une infection causée par la bactérie Salmonella, souvent liée aux œufs et à la viande insuffisamment cuits.\n\n**Aliments à risque :**\n- Œufs crus ou peu cuits (mousse au chocolat maison, tiramisu maison, mayonnaise maison)\n- Viande insuffisamment cuite (surtout volaille)\n- Graines germées crues\n\n**Prévention :**\n- Cuire les œufs à cœur (blanc et jaune fermes)\n- Cuire la volaille à 74 °C à cœur\n- Utiliser des produits industriels pour les préparations à base d'œufs crus\n- Se laver les mains après avoir manipulé des œufs ou de la viande crue\n\n**Symptômes :** diarrhée, vomissements, fièvre, douleurs abdominales (6-72h après ingestion).",
+    "source": "https://sante.fr/salmonellose",
+    "avertissement": "En cas de doute, demande à ta sage-femme ou ton médecin."
+  },
+  {
+    "id": "fiche-mercure",
+    "type": "fiche",
+    "titre": "Mercure et poissons",
+    "contenu": "Le méthylmercure est un métal lourd neurotoxique qui s'accumule dans les grands poissons prédateurs. Il peut affecter le développement neurologique du fœtus.\n\n**Poissons à limiter fortement :**\n- Espadon, requin, marlin, lamproie\n- Thon rouge (frais)\n\n**Poissons à limiter (1-2 portions/semaine) :**\n- Thon germon (blanc), thon albacore\n- Bar, dorade, lotte\n\n**Poissons recommandés (2 portions/semaine) :**\n- Sardines, maquereaux, harengs (petits poissons)\n- Saumon d'élevage (bien cuit)\n- Truite (bien cuite)\n- Cabillaud, colin, lieu\n\n**Pourquoi manger du poisson malgré tout ?**\nLes oméga-3 (DHA) sont essentiels au développement du cerveau du bébé. Privilégier les petits poissons gras 2 fois par semaine.",
+    "source": "https://www.sante.fr/decryptage/nos-reponses/les-femmes-enceintes-doivent-elles-eviter-de-manger-du-poisson",
+    "avertissement": "En cas de doute, demande à ta sage-femme ou ton médecin."
+  },
+  {
+    "id": "fiche-hygiene",
+    "type": "fiche",
+    "titre": "Hygiène alimentaire",
+    "contenu": "Des gestes simples réduisent considérablement les risques alimentaires pendant la grossesse.\n\n**Lavage des mains :**\n- Avant de cuisiner et de manger\n- Après avoir manipulé des aliments crus (viande, œufs, légumes terreux)\n- Après être allée aux toilettes\n- Après avoir touché un animal\n\n**Réfrigérateur :**\n- Température < 4 °C\n- Nettoyer régulièrement (1×/mois avec du vinaigre blanc)\n- Séparer les aliments crus et cuits\n- Respecter les DLC (dates limites de consommation)\n\n**Cuisson :**\n- Viande : bien cuite à cœur (71 °C), pas de rosé\n- Poisson : à cœur (63 °C)\n- Œufs : blanc et jaune bien fermes\n- Réchauffer les restes à 74 °C\n\n**Conservation :**\n- Ne pas recongeler un produit décongelé\n- Consommer les restes dans les 48h\n- Emballer les aliments séparément\n\n**Eau :**\n- L'eau du robinet est sûre en France\n- En voyage : eau en bouteille capsulée",
+    "source": "https://sante.fr/grossesse-quels-aliments-sont-autorises",
+    "avertissement": "En cas de doute, demande à ta sage-femme ou ton médecin."
+  }
+]

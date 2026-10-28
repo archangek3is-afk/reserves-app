@@ -1,0 +1,22 @@
+{
+  "name": "reserves-app",
+  "version": "1.0.0",
+  "description": "Application PWA de gestion du foyer pour un couple dont une personne est enceinte. Gère les courses partagées, le kit de survie, un guide alimentaire grossesse et le budget.",
+  "main": "sw.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^6.0.0",
+    "firebase-admin": "^14.5.0",
+    "firebase-tools": "^15.34.1",
+    "vitest": "^5.0.5"
+  }
+}

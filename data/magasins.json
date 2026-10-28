@@ -1,0 +1,10 @@
+[
+  {"id":"lidl-choisy","nom":"Lidl Choisy-le-Roi","adresse":"138 av. de Villeneuve-Saint-Georges, 94600 Choisy-le-Roi","horaires":"Lun–sam 8h30–20h, dim 8h30–12h","mapsUrl":"https://maps.google.com/?q=Lidl+138+avenue+de+Villeneuve-Saint-Georges+94600+Choisy-le-Roi","actif":true,"ordre":1},
+  {"id":"aldi-montgeron","nom":"Aldi Montgeron","adresse":"132 av. Charles-de-Gaulle, 91230 Montgeron","horaires":"Lun–sam 8h30–20h30, dim 8h30–18h","mapsUrl":"https://maps.google.com/?q=Aldi+132+avenue+Charles+de+Gaulle+91230+Montgeron","actif":true,"ordre":2},
+  {"id":"action-vigneux","nom":"Action Vigneux-sur-Seine","adresse":"6 rue des Gaulois, 91270 Vigneux-sur-Seine","horaires":"Lun–sam 8h30–20h, fermé dim","mapsUrl":"https://maps.google.com/?q=Action+6+rue+des+Gaulois+91270+Vigneux-sur-Seine","actif":true,"ordre":3},
+  {"id":"action-valenton","nom":"Action Valenton","adresse":"4 av. Guy-Môquet, 94460 Valenton","horaires":"Lun–sam 8h30–20h, dim 9h–19h","mapsUrl":"https://maps.google.com/?q=Action+4+avenue+Guy-Moquet+94460+Valenton","actif":true,"ordre":4},
+  {"id":"auchan-vigneux","nom":"Auchan Vigneux","adresse":"8 rue de la Longueraie, 91270 Vigneux-sur-Seine","horaires":"Lun–sam 8h30–21h30, dim 8h30–12h30","mapsUrl":"https://maps.google.com/?q=Auchan+8+rue+de+la+Longueraie+91270+Vigneux-sur-Seine","actif":true,"ordre":5},
+  {"id":"leclerc-montgeron","nom":"E.Leclerc Montgeron","adresse":"72 av. Jean-Jaurès, 91230 Montgeron","horaires":"Lun–sam 8h30–20h30, dim 9h–13h","mapsUrl":"https://maps.google.com/?q=Leclerc+72+avenue+Jean-Jaures+91230+Montgeron","actif":true,"ordre":6},
+  {"id":"pharmacie","nom":"Pharmacie","adresse":"","horaires":"","mapsUrl":"","actif":true,"ordre":7},
+  {"id":"autre","nom":"Autre","adresse":"","horaires":"","mapsUrl":"","actif":true,"ordre":8}
+]
